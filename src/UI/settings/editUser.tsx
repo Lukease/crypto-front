@@ -1,7 +1,17 @@
-import React from "react";
+import React from 'react'
 
 export function EditUserInformation(props: any) {
     const userService = props.userService
+
+    const deleteUser = (e: any) => {
+        e.preventDefault()
+
+        userService.removeUserByLogin()
+    }
+
+    /**
+     * funkcja do wyświetlania komponentu z możliwościa edycji danych o uzytkowniku
+     * **/
 
     return (
         <div className={'editor-container'}>
@@ -59,6 +69,18 @@ export function EditUserInformation(props: any) {
                     type={'submit'}
                 >
                     Save password
+                </button>
+            </form>
+            <form
+                className={'editor-container__nav'}
+            >
+                <input type={'checkbox'} required={true}></input>
+                <span>You will delete user</span>
+                <button
+                    type={'submit'}
+                    onClick={e => deleteUser(e)}
+                >
+                    delete user
                 </button>
             </form>
         </div>

@@ -1,0 +1,42 @@
+.navbar
+  height: 7%
+  background-color: #262525
+  border-bottom: var(--border)
+  width: 100%
+  display: flex
+  top: 0
+  align-items: center
+
+
+
+  &__item
+    width: calc(var(--nav-size) * 0.8)
+    display: flex
+    justify-content: center
+    align-items: center
+    padding: 5px
+
+
+  &__button
+    width: auto
+    height: 30px
+    background-color: #444141
+    margin: 7px
+    display: flex
+    align-items: center
+    justify-content: center
+    transition: filter 300ms
+    font-weight: bold
+
+.crypto
+  width: 100%
+  height: 90%
+
+.navbar__nav--button:hover
+  filter: brightness(1.2)
+
+span,p,div
+  color: #DFDEDF
+
+// .navbar oznacza ze bedziemy stylowac klasę o nazwie navbar #navbar oznaczałby stylowanie komponentu o id navbar
+  span... div... oznacza ze stylujemy wszystkie elementy o takim tagu

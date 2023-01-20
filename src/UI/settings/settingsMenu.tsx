@@ -11,23 +11,18 @@ export class SettingsMenu extends Component<any, any> {
 
         this.userService = props.userService
     }
-
+/**
+ * element o tagu a po klikniecu przechodzimy do ściezki http://localhost:3000/home
+ * **/
     render() {
         return (
-            <UserSettings userService={this.userService}/>
+            <div className={'settings'}>
+                <div className={'settings__nav'}>
+                    <UserAbout userService={this.userService}/>
+                    <EditUserInformation userService={this.userService}/>
+                    <a className={'settings__nav--escape'} href={'/home'}>X</a>
+                </div>
+            </div>
         )
     }
-}
-
-function UserSettings(props: any) {
-
-    return (
-        <div className={'settings'}>
-            <div className={'settings__nav'}>
-                <UserAbout userService={props.userService}/>
-                <EditUserInformation userService={props.userService}/>
-                <a className={'settings__nav--escape'} href={'/'}>X</a>
-            </div>
-        </div>
-    )
 }

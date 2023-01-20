@@ -14,20 +14,41 @@ function LoginNavigation(props: any) {
     const [isHoverRegister, setIsHoverRegister] = useState(false)
     const [userUnderstandPolity, setUserUnderstandPolity] = useState(false)
 
+    /**
+     * #3
+     * dzieki useState możemy przechowywać i uaktualniać jakiś stan tak jak np czy jestemy na stronie logowania czy rejestracji
+     * const [isSignInForm, setSignInForm] = useState(true)
+     *
+     * w naszym przypadku wartość domyślna to true żeby ją zmienić wystarczy napisać
+     * setSignInForm(false) lub setSignInForm(!isSignInForm) wykrzyknik oznacz wartość przeciwną)
+     * **/
     const signIn = async (e: any) => {
         setLoginMessage('')
         e.preventDefault()
-        const allUsers: Array<UserDto> = await userService.getAllUsers()
-        const user = allUsers.find(user => user.login === login && user.password === password)
+        /**
+         * #4
+         * e.preventDefault() wyłącza nam domyślne zachowanie które w naszym wypadku jest niepożądanym zachowaniem gdyż dochodzi
+         * do odświeżania strony i wypisywania z inputów loginu hasła itp
+         *
+         * async await musimy zadeklarować na początku funkcji że jest ona asynchroniczna czyli ma poczekać
+         * na ukończenie funcji/pobranie danych, dzieki await pokazujemy w którym momencie program ma poczekać
+         * async await zwraca nam promisa
+         * **/
+        await userService.logIn(login, password)
 
-        if (user) {
-            window.location.href = 'http://localhost:3000/settings'
+        if (userService.getCurrentSession()) {
+            window.location.href = 'http://localhost:3000/home'
+            /**
+             * w przypadku porpawnego logwoania możemy wyrenderować kolejny komponent poprzez zmanę lokacji href
+             * **/
         } else {
             const incorrectData = 'Incorrect login or password'
 
             setLoginMessage(incorrectData)
         }
-
+        /**
+         *
+         * **/
         setPassword('')
         setLogin('')
     }
@@ -43,19 +64,27 @@ function LoginNavigation(props: any) {
         if (equalsPassword && userDontExist && userUnderstandPolity) {
             const userDto: UserDto = new UserDto(undefined, login, password, email)
             await userService.addNewUser(userDto)
-            window.location.href = 'http://localhost:3000/settings'
+            window.location.href = 'http://localhost:3000/home'
+
+            /**
+             * jeżeli warunek zostanie spełniony tworzy się uzytkownik, userService wyśle nowego uzytkownika do zapisania do backendu
+             * **/
         }
 
         setMessageWhenRegisterUsedWrongData(equalsPassword, userLoginExist, userEmailExist)
     }
 
-    const setMessageWhenRegisterUsedWrongData = (equalsPassword: boolean, userLoginExist: UserDto | undefined, userEmailExist:  UserDto | undefined) => {
+    const setMessageWhenRegisterUsedWrongData = (equalsPassword: boolean, userLoginExist: UserDto | undefined,
+                                                 userEmailExist: UserDto | undefined) => {
+        /**
+         * wyświetlanie błedu jezeli zostaną spełnione warunki np niepeprawy login
+         * **/
         let errorMessage: string = ''
 
         if (!equalsPassword) {
             errorMessage = 'Wrong password'
         }
-
+//
         if (userLoginExist) {
             errorMessage += ' User login '
         }
@@ -64,10 +93,13 @@ function LoginNavigation(props: any) {
             errorMessage += 'email '
         }
 
-        if (userEmailExist || userLoginExist){
+        if (userEmailExist || userLoginExist) {
             errorMessage += 'exist'
         }
 
+        /**
+         * czyszczenie imputów żeby ponownie wspiać hasło
+         * **/
         setPassword('')
         setConfirmPassword('')
         setRegisterMessage(errorMessage)
@@ -78,11 +110,21 @@ function LoginNavigation(props: any) {
             className={'form'}
             onSubmit={(event) => isSignInForm ? signIn(event) : register(event)}
         >
+            {/**
+             *  skrócona wersja if
+             * isSignInForm ? jezeli isSignInForm jest true signIn(event) : jezeli isSignInForm jest false register(event)
+             * **/
+            }
             <div className={'form__title'}>
-                {isSignInForm ? 'Sign In' : 'Register'}
+                {
+                    isSignInForm ? 'Sign In' : 'Register'}
             </div>
             {
                 isSignInForm && loginMessage !== '' ?
+                    /**
+                     *  jezeli jesteśmy w okienku logowania i loginMessage nie jest pustym stringiem
+                     *  wyświetlanie wiadomości o niepoprawych danych
+                     * **/
                     <label
                         style={{color: 'red'}}>
                         {loginMessage}
@@ -91,6 +133,10 @@ function LoginNavigation(props: any) {
             }
             {
                 !isSignInForm && registerMessage !== '' ?
+                    /**
+                     *  jezeli jesteśmy w okienku rejestracji i loginMessage nie jest pustym stringiem
+                     *  wyświetlanie wiadomości o niepoprawych danych czyli jak np uzytkownik o takim loginie istnieje
+                     * **/
                     <label
                         style={{color: 'red'}}>
                         {registerMessage}
@@ -107,6 +153,20 @@ function LoginNavigation(props: any) {
                     onChange={event => setLogin(event.target.value)}/>
             </div>
             {
+                /**
+                 * placeholder={'👤 set login'}
+                 * jezeli input jest pusty wyświetla się👤 set login
+                 * required - jest niezbędny do wypełnienia mozna postawić warunki np minLength={10}
+                 *
+                 * on change wychwytuje nam czy napisaliśmy cos w inpucie
+                 *  event.target.value string z danego inputu,
+                 * dzieki setLogin() zostaje przypisany jako nowy login
+                 * tak samo z mailem i passwordem
+                 *
+                 * typ inputu email - dba o to aby tekst zawierał @
+                 * typ inputu password - chroni nasze hasło i wyświetla ****
+                 * **/
+
                 isSignInForm ?
                     null :
                     <div className='input-container'>
@@ -128,9 +188,11 @@ function LoginNavigation(props: any) {
                     required minLength={5}
                     value={password}
                     onChange={event => setPassword(event.target.value)}/>
-
             </div>
             {
+                /**
+                 *  isSignInForm ? null - w przypadu true nie wyświetlaj nic
+                 * **/
                 isSignInForm ?
                     null :
                     <div className='input-container'>
@@ -171,6 +233,12 @@ function LoginNavigation(props: any) {
                 </button>
             </div>
             {
+                /**
+                 * zmiana koloru elementu po najechaniu kursorem
+                 *  onMouseEnter po najechaniu na element zmień IsHoverRegister na false
+                 *  onMouseLeave po opuszczeniu kursorem elementu zmien watośc IsHoverRegister na false
+                 *  po kliknieciu SignInForm = false i wyświetla sie okienko rejestracji
+                 * **/
                 isSignInForm ?
                     <a
                         style={
@@ -179,6 +247,7 @@ function LoginNavigation(props: any) {
                                 backgroundColor: isHoverRegister ? 'grey' : ''
                             }
                         }
+
                         onClick={() => setSignInForm(false)}
                         onMouseEnter={() => setIsHoverRegister(true)}
                         onMouseLeave={() => setIsHoverRegister(false)}
@@ -192,14 +261,38 @@ function LoginNavigation(props: any) {
 
 }
 
-export class Navigation extends Component<any, any> {
+export class LoginOrRegister extends Component<any, any> {
     userService: UserService
 
     constructor(props: any) {
         super(props)
 
         this.userService = props.userService
+
+        // this.state = {
+        //     login: ''
+        // }
+        /**
+         * tworzenie loginu z wartością pusty string
+         * **/
     }
+
+    // setLogin(login: String) {
+    //     this.setState({
+    //         login: login
+    //     })
+    // }
+    /**
+     * edycja loginu
+     * **/
+
+
+    /**
+     * #2
+     * jeżeli chciałbym stworzyć cały komponent w tej klasie zamiast funkcji LoginNavigation w constructor,
+     * przykład jakby to wyglądało powyżej
+     * moim zdaniem useState wygląda i utrzymuje się dużo lepiej tak jak w funkcji LoginNavigation
+     * **/
 
     render() {
         return (
