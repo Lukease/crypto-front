@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 import {UserService} from '../../backend-service-connector/service'
+import {UserMenu} from "./userMenu";
+import {HomeContext} from "./homeContext";
+import {HomeNavigation} from "./homeNavigation";
 
 export class Home extends Component<any, any> {
     userService: UserService
@@ -18,17 +21,14 @@ export class Home extends Component<any, any> {
 }
 
 function HomeMenu(props: any) {
+    const userService =props.userService
 
     return (
-        <div id={'root'}>
-            <div className={'navbar'}>
-                <div className={'navbar__item'}>📈</div>
-                <button className={'navbar__button'}>Home</button>
-                <button className={'navbar__button'}>Dashboard</button>
-                <button className={'navbar__button'}>Market</button>
-                <div style={{width: '70%'}}></div>
-                <div>⚙</div>
-                <div style={{margin: '10px'}}>LogOut</div>
+        <div className={'home'}>
+            <HomeNavigation/>
+            <div className={'context'}>
+                <UserMenu/>
+                <HomeContext userService={userService}/>
             </div>
         </div>
     )

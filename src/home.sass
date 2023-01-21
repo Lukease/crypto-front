@@ -1,42 +1,135 @@
-.navbar
-  height: 7%
+@mixin hoveredItem()
+  opacity: 0.8
+  background-color: #6E6D70
+  filter: brightness(1.2)
+
+@mixin navigationColor
   background-color: #262525
-  border-bottom: var(--border)
+
+.home
+  height: 100%
   width: 100%
   display: flex
-  top: 0
+
+.navbar
+  height: 100%
+  width: 10%
+  display: flex
   align-items: center
+  flex-direction: column
+  @include navigationColor()
 
-
+  &__title
+    background-image: url("icons/Bitcoin_logo.svg.png")
+    display: flex
+    width: 100px
+    height: 30px
+    background-repeat: no-repeat
+    background-size: contain
+    background-position: center
+    border-radius: 20px
 
   &__item
-    width: calc(var(--nav-size) * 0.8)
+    width: 90%
+    height: 10%
     display: flex
     justify-content: center
     align-items: center
-    padding: 5px
-
+    border-bottom-style: groove
 
   &__button
-    width: auto
+    width: 90%
     height: 30px
-    background-color: #444141
     margin: 7px
     display: flex
     align-items: center
-    justify-content: center
     transition: filter 300ms
     font-weight: bold
+    border-radius: 5px
+    gap: 5px
+
+.context
+  display: flex
+  width: 90%
+  height: 100%
+  flex-direction: column
+
+  &__navigation
+    width: 100%
+    height: 5%
+    display: flex
+    justify-content: flex-end
+    align-items: center
+    gap: 10px
+    @include navigationColor()
+
+    &--item
+      display: flex
+      border-radius: 20px
+      background-color: #383737
+      padding: 4px
+      transition: filter 300ms
+
+.dashboard
+  display: flex
+  width: 100%
+  height: 95%
+  background-color: rgba(255, 255, 255, 0.86)
+  align-items: center
+  justify-content: center
+  flex-direction: column
+
+  &__container
+    display: flex
+    width: 80%
+    min-height: 80%
+    flex-wrap: wrap
+    justify-content: space-between
+
+  &__item
+    display: flex
+    width: 200px
+    height: 100px
+    padding: 5%
+    background-color: white
+    border-radius: 10px
+    justify-content: space-around
+
+    &--description
+      display: flex
+      flex-direction: column
+      justify-content: space-between
+
+    &--icon
+      display: flex
+      border-radius: 20px
+      width: 40px
+      height: 40px
+      padding: 4px
+      transition: filter 300ms
+      justify-content: center
+      align-items: center
+
+    &--big-value
+      font-weight: bold
+      font-size: xx-large
+
+//$colors: red, orange, yellow, green, blue, purple, white, grey
+//$repeat: 20
+//
+//@for $i from 1 through 8
+//  li:nth-child(#{length($colors)}n+#{$i})
+//    background: lighten(nth($colors, random(length($colors))), 20%)
+
+.navbar__button:hover
+  @include hoveredItem
+
+.context__navigation--item:hover
+  @include hoveredItem
 
 .crypto
   width: 100%
   height: 90%
 
-.navbar__nav--button:hover
-  filter: brightness(1.2)
-
 span,p,div
   color: #DFDEDF
-
-// .navbar oznacza ze bedziemy stylowac klasę o nazwie navbar #navbar oznaczałby stylowanie komponentu o id navbar
-  span... div... oznacza ze stylujemy wszystkie elementy o takim tagu
