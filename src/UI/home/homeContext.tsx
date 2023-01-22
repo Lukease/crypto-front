@@ -13,16 +13,16 @@ export function HomeContext(props: any) {
 
 function Dashboard(props: any) {
     const userService = props.userService
-
     return (
         <div className={'dashboard'}>
             <div style={{height: '10%'}}></div>
             <div className={'dashboard__container'}>
-                <DashboardItem title={'Budget'} value={'$24k'} description={'12% Since Last month'} icon={'💰'}/>
+                <DashboardItem title={'Budget'} value={'$24k'} description={'12% Since Last month'} icon={'💰'}
+                               color={'red'}/>
                 <DashboardItem title={'Total Customers'} value={'1,6k'} description={'16% Since Last month'}
-                               icon={'👥'}/>
-                <DashboardItem title={'Task Progress'} value={'75.5%'} description={''} icon={'💸'}/>
-                <DashboardItem title={'Total Profit'} value={'$23k'} description={''} icon={'$'}/>
+                               icon={'👥'} color={'green'}/>
+                <DashboardItem title={'Task Progress'} value={'75.5%'} description={''} icon={'💸'} color={'yellow'}/>
+                <DashboardItem title={'Total Profit'} value={'$23k'} description={''} icon={'$'} color={'blue'}/>
                 <Chart userService={userService}/>
             </div>
         </div>
@@ -38,7 +38,7 @@ function DashboardItem(props: any) {
                 <div className={'dashboard__item--big-value'}>{props.value}</div>
                 <div>{props.description}</div>
             </div>
-            <li className={'dashboard__item--icon'}>{props.icon}</li>
+            <li className={'dashboard__item--icon'} style={{backgroundColor: props.color}}>{props.icon}</li>
         </div>
     )
 }

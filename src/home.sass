@@ -14,7 +14,6 @@
   border-radius: 10px
   justify-content: space-around
   display: flex
-  align-items: center
   @include buttonsPointer()
 
 .home
@@ -129,6 +128,7 @@
   height: 400px
   justify-content: space-around
   @include dashboardItems()
+  align-items: center
   flex-direction: column
 
   &__title
@@ -156,14 +156,6 @@
   &__chart
     display: flex
     height: 50%
-
-
-$colors: red, orange, yellow, green, blue, purple, white, grey
-$repeat: 20
-
-@for $i from 1 through 8
-  li:nth-child(#{length($colors)}n+#{$i})
-    background: lighten(nth($colors, random(length($colors))), 20%)
 
 .navbar__button:hover
   @include hoveredItem
