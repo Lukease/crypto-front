@@ -3,8 +3,19 @@
   background-color: #6E6D70
   filter: brightness(1.2)
 
-@mixin navigationColor
-  background-color: #262525
+@mixin buttonsPointer()
+  cursor: pointer
+
+@mixin navigationColor()
+  background-color: #18182b
+
+@mixin dashboardItems()
+  background-color: white
+  border-radius: 10px
+  justify-content: space-around
+  display: flex
+  align-items: center
+  @include buttonsPointer()
 
 .home
   height: 100%
@@ -47,6 +58,7 @@
     font-weight: bold
     border-radius: 5px
     gap: 5px
+    @include buttonsPointer()
 
 .context
   display: flex
@@ -61,14 +73,14 @@
     justify-content: flex-end
     align-items: center
     gap: 10px
-    @include navigationColor()
+    background-color: white
 
     &--item
       display: flex
       border-radius: 20px
-      background-color: #383737
       padding: 4px
       transition: filter 300ms
+      @include buttonsPointer()
 
 .dashboard
   display: flex
@@ -81,19 +93,17 @@
 
   &__container
     display: flex
-    width: 80%
+    width: 85%
     min-height: 80%
     flex-wrap: wrap
-    justify-content: space-between
+    justify-content: space-evenly
+    gap: 10px
 
   &__item
-    display: flex
     width: 200px
     height: 100px
     padding: 5%
-    background-color: white
-    border-radius: 10px
-    justify-content: space-around
+    @include dashboardItems()
 
     &--description
       display: flex
@@ -114,22 +124,52 @@
       font-weight: bold
       font-size: xx-large
 
-//$colors: red, orange, yellow, green, blue, purple, white, grey
-//$repeat: 20
-//
-//@for $i from 1 through 8
-//  li:nth-child(#{length($colors)}n+#{$i})
-//    background: lighten(nth($colors, random(length($colors))), 20%)
+.chart-container
+  width: 600px
+  height: 400px
+  justify-content: space-around
+  @include dashboardItems()
+  flex-direction: column
+
+  &__title
+    display: flex
+    width: 100%
+    border-bottom-style: groove
+    height: 60px
+
+  &__crypto-names
+    display: flex
+    width: 100%
+    height: 30px
+    align-items: center
+    justify-content: center
+    gap: 5px
+
+    &--container
+      width: auto
+      display: flex
+      padding: 5px
+      align-items: center
+      justify-content: center
+      gap: 5px
+  
+  &__chart
+    display: flex
+    height: 50%
+
+
+$colors: red, orange, yellow, green, blue, purple, white, grey
+$repeat: 20
+
+@for $i from 1 through 8
+  li:nth-child(#{length($colors)}n+#{$i})
+    background: lighten(nth($colors, random(length($colors))), 20%)
 
 .navbar__button:hover
   @include hoveredItem
 
 .context__navigation--item:hover
   @include hoveredItem
-
-.crypto
-  width: 100%
-  height: 90%
 
 span,p,div
   color: #DFDEDF
