@@ -1,5 +1,4 @@
 import React from "react";
-import {PieChart} from "react-minimal-pie-chart";
 import {Chart} from "./chart";
 
 export function HomeContext(props: any) {
@@ -13,14 +12,15 @@ export function HomeContext(props: any) {
 
 function Dashboard(props: any) {
     const userService = props.userService
+
     return (
         <div className={'dashboard'}>
             <div style={{height: '10%'}}></div>
             <div className={'dashboard__container'}>
                 <DashboardItem title={'Budget'} value={'$24k'} description={'12% Since Last month'} icon={'💰'}
-                               color={'red'}/>
+                                    color={'red'}/>
                 <DashboardItem title={'Total Customers'} value={'1,6k'} description={'16% Since Last month'}
-                               icon={'👥'} color={'green'}/>
+                                    icon={'👥'} color={'green'}/>
                 <DashboardItem title={'Task Progress'} value={'75.5%'} description={''} icon={'💸'} color={'yellow'}/>
                 <DashboardItem title={'Total Profit'} value={'$23k'} description={''} icon={'$'} color={'blue'}/>
                 <Chart userService={userService}/>

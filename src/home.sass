@@ -57,6 +57,7 @@
     font-weight: bold
     border-radius: 5px
     gap: 5px
+    color: white
     @include buttonsPointer()
 
 .context
@@ -163,5 +164,17 @@
 .context__navigation--item:hover
   @include hoveredItem
 
-span,p,div
-  color: #DFDEDF
+@media only screen and (max-width: 1157px)
+  .home
+    flex-direction: column
+  
+  .navbar
+    flex-direction: row
+    width: 100%
+    height: 5%
+  
+  .navbar__item
+    border-style: none
+  
+  .context
+    width: 100%

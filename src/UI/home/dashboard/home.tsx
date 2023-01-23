@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import {UserService} from '../../backend-service-connector/service'
-import {UserMenu} from "./userMenu";
+import {UserService} from '../../../backend-service-connector/service'
+import {UserMenu} from "../navigation/userMenu";
+import {HomeNavigation} from "../navigation/homeNavigation";
 import {HomeContext} from "./homeContext";
-import {HomeNavigation} from "./homeNavigation";
 
 export class Home extends Component<any, any> {
     userService: UserService

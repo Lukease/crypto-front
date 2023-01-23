@@ -1,6 +1,7 @@
 @import "login.css";
 @import "settings.css";
 @import "home.css";
+@import "history.css";
 
 /**
 @import "home.css"; importowanie pliku home.css do głównego index.css
@@ -26,8 +27,4 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-label,span{
-    color: white;
 }

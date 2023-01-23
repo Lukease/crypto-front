@@ -1,11 +1,11 @@
 import {UserDto} from '../model/rest/userDto'
 import {Config} from '../config'
-import {UserLogIn} from "../model/rest/userLogIn";
-import {CurrentSession} from "../model/rest/currentSession";
+import {UserLogIn} from "../model/rest/userLogIn"
+import {cryptoChart} from "../../UI/home/types"
 
 export class UserService {
     allUsers: Array<UserDto> = []
-    actualSession: CurrentSession | undefined
+    logInUser: UserLogIn | undefined
 
     async getAllUsers() {
         /**
@@ -48,16 +48,12 @@ export class UserService {
     }
 
     removeUserByLogin(login: string) {
-        /**
-         * funkcja która umożliwia usuwanie użytkownika poprzez podanie loginu
-         * jako header jest wysyłana także autoryzacja która zawiera token zalogowanego uzytkownika dla zabezpieczenia
-         * **/
-        fetch(Config.baseUrl + `?login=${login}`, {
+        fetch(Config.baseUrl + Config.removeUserPath + login, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
-                Authorization: this.actualSession!.getActiveToken()
+                // Authorization: this.currentSession!.getActiveToken()
             },
         })
             .then(response => response.json())
@@ -67,9 +63,13 @@ export class UserService {
     }
 
     async getUserByLogin(login: string) {
-        await fetch(Config.baseUrl + `?login=${login}`, {
+        await fetch(Config.baseUrl + Config.removeUserPath + login, {
             method: 'GET',
-            headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                // Authorization: this.currentSession!.getActiveToken()
+            },
         })
             .then(response => response.json())
             .catch(error => error)
@@ -80,40 +80,42 @@ export class UserService {
     editUserEmailById(userId: number, newEmail: string) {
         fetch(Config.baseUrl + `/${userId}/${newEmail}`, {
             method: 'PUT',
-            headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                // Authorization: this.currentSession!.getActiveToken()
+            },
         })
             .then(response => response.json())
             .catch(error => error)
     }
 
-    editUserPasswordById(userId: number, newEmail: string) {
-        fetch(Config.baseUrl + `/${userId}/${newEmail}`, {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-        })
-            .then(response => response.json())
-            .catch(error => error)
-    }
+    // editUserPasswordById(userId: number, newEmail: string) {
+    //     fetch(Config.baseUrl + `/${userId}/${newEmail}`, {
+    //         method: 'PUT',
+    //         headers: {'Content-Type': 'application/json', Accept: 'application/json',Authorization: this.actualSession!.getActiveToken()},
+    //     })
+    //         .then(response => response.json())
+    //         .catch(error => error)
+    // }
 
     editUserLoginById(userId: number, newEmail: string) {
         fetch(Config.baseUrl + `/${userId}/${newEmail}`, {
             method: 'PUT',
-            headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                // Authorization: this.currentSession!.getActiveToken()
+            },
         })
             .then(response => response.json())
             .catch(error => error)
     }
 
     async logIn(login: string, password: string) {
-        /**
-         * funkcja asynchroniczna w której wysyłamy zapytanie do backendu metodą post
-         * w przypadku otzrymania błędu jako nasza currentSession bedzie undefined
-         * jeżeli backend znajdzie nam takiego użytkownik utorzy nam token i prześle go nam w response
-         * który sobie zapiszemy jako obecna sessia
-         * **/
         const userLogIn: UserLogIn = new UserLogIn(login, password)
 
-        return await fetch(Config.baseUrl + '/logIn', {
+        return await fetch(Config.baseUrl + Config.logInUserPath, {
             method: 'POST',
             headers: {'Content-Type': 'application/json', Accept: 'application/json'},
             body: JSON.stringify(userLogIn)
@@ -121,22 +123,34 @@ export class UserService {
             .then(response => {
                 return response.json()
                     .then((data) => {
-                        this.setCurrentSession(data)
+                        console.log(data.activeToken)
+                        this.logInUser = data
+                        this.setLogInUserToLocalStorage(userLogIn)
                         alert('success logIn')
 
                         return data
                     })
                     .catch(() => {
-                        this.setCurrentSession(undefined)
+                        this.logInUser = undefined
                     })
             })
+
     }
 
-    setCurrentSession(session: CurrentSession | undefined) {
-        this.actualSession = session
+    setLogInUserToLocalStorage(user: UserLogIn | undefined) {
+        localStorage.setItem('logInUser', JSON.stringify(user))
     }
 
-    getCurrentSession() {
-        return this.actualSession
+    getLogInUserFromLocalStorage() {
+        return JSON.parse(localStorage.getItem('logInUser')!)
+    }
+
+
+    getDataForChart(): Array<cryptoChart> {
+        return ([
+            {color: '#E38627', title: 'Bitcoin', value: 40},
+            {color: '#C13C37', title: 'Ethereum', value: 35},
+            {color: '#6A2135', title: 'Luna', value: 10},
+        ])
     }
 }

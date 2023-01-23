@@ -34,9 +34,9 @@ function LoginNavigation(props: any) {
          * na ukończenie funcji/pobranie danych, dzieki await pokazujemy w którym momencie program ma poczekać
          * async await zwraca nam promisa
          * **/
-        await userService.logIn(login, password)
+        const userLogged = await userService.logIn(login, password)
 
-        if (userService.getCurrentSession()) {
+        if (userLogged) {
             window.location.href = 'http://localhost:3000/home'
             /**
              * w przypadku porpawnego logwoania możemy wyrenderować kolejny komponent poprzez zmanę lokacji href
@@ -62,7 +62,7 @@ function LoginNavigation(props: any) {
         const userDontExist: boolean = !userLoginExist && !userEmailExist
 
         if (equalsPassword && userDontExist && userUnderstandPolity) {
-            const userDto: UserDto = new UserDto(undefined, login, password, email)
+            const userDto: UserDto = new UserDto(undefined, login, password, email, undefined, undefined)
             await userService.addNewUser(userDto)
             window.location.href = 'http://localhost:3000/home'
 
@@ -233,12 +233,6 @@ function LoginNavigation(props: any) {
                 </button>
             </div>
             {
-                /**
-                 * zmiana koloru elementu po najechaniu kursorem
-                 *  onMouseEnter po najechaniu na element zmień IsHoverRegister na false
-                 *  onMouseLeave po opuszczeniu kursorem elementu zmien watośc IsHoverRegister na false
-                 *  po kliknieciu SignInForm = false i wyświetla sie okienko rejestracji
-                 * **/
                 isSignInForm ?
                     <a
                         style={

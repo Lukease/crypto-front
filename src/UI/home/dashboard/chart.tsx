@@ -1,14 +1,11 @@
 import {PieChart} from "react-minimal-pie-chart";
 import React from "react";
+import {cryptoChart} from "../types";
 
 export function Chart(props: any) {
     const userService = props.userService
 
-    const data = [
-        {color: '#E38627', title: 'Bitcoin', value: 10},
-        {color: '#C13C37', title: 'Ethereum', value: 15},
-        {color: '#6A2135', title: 'Luna', value: 20},
-    ]
+    const data: Array<cryptoChart> = userService.getDataForChart()
 
     const renderCryptoNames = () => {
         return data.map((crypto, index) => {
@@ -31,8 +28,9 @@ export function Chart(props: any) {
                 }
 
             </div>
-            <PieChart className={'chart-container__chart'}
-                      data={data}
+            <PieChart
+                className={'chart-container__chart'}
+                data={data}
             />
         </div>
     )
