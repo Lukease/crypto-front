@@ -17,12 +17,12 @@ function Dashboard(props: any) {
         <div className={'dashboard'}>
             <div style={{height: '10%'}}></div>
             <div className={'dashboard__container'}>
-                <DashboardItem title={'Budget'} value={'$24k'} description={'12% Since Last month'} icon={'💰'}
+                <DashboardItem title={'Total Value'} value={'$24k'} description={'12% Since Last month'} icon={'💰'}
                                     color={'red'}/>
-                <DashboardItem title={'Total Customers'} value={'1,6k'} description={'16% Since Last month'}
+                <DashboardItem title={'First Transaction'} value={'22.12.2013'} description={''}
                                     icon={'👥'} color={'green'}/>
-                <DashboardItem title={'Task Progress'} value={'75.5%'} description={''} icon={'💸'} color={'yellow'}/>
-                <DashboardItem title={'Total Profit'} value={'$23k'} description={''} icon={'$'} color={'blue'}/>
+                <DashboardItem title={'Total Transactions'} value={'6 Transactions'} description={''} icon={'💸'} color={'yellow'}/>
+                <DashboardItem title={'Total Profit'} value={'3%'} description={'since 2013'} icon={'$'} color={'blue'}/>
                 <Chart userService={userService}/>
             </div>
         </div>

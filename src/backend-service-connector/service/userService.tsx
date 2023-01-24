@@ -123,10 +123,8 @@ export class UserService {
             .then(response => {
                 return response.json()
                     .then((data) => {
-                        console.log(data.activeToken)
                         this.logInUser = data
-                        this.setLogInUserToLocalStorage(userLogIn)
-                        alert('success logIn')
+                        this.setLogInUserToLocalStorage(data)
 
                         return data
                     })

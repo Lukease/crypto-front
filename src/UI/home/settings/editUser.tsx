@@ -1,8 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 export function EditUserInformation(props: any) {
     const userService = props.userService
+    const [userLogin, setUserLogin] = useState('')
+    const [userEmail, setUserEmail] = useState('')
 
+    const setLogin = () => {
+
+    }
 
     return (
         <div className={'editor-container'}>
@@ -14,6 +19,7 @@ export function EditUserInformation(props: any) {
                     placeholder={'New login'}
                     name='login'
                     required
+                    onChange={(event) => setUserLogin(event.target.value)}
                 />
                 <button
                     type={'submit'}
@@ -27,9 +33,11 @@ export function EditUserInformation(props: any) {
                     type={'email'}
                     placeholder={'New email address'}
                     required
+                    onChange={(event) => setUserEmail(event.target.value)}
                 />
                 <button
                     type={'submit'}
+
                 >
                     Edit Email
                 </button>

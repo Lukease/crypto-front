@@ -19,7 +19,7 @@ export function Chart(props: any) {
         <div className={'chart-container'}>
             <div className={'chart-container__title'}>
                 <h2 style={{width: '90%', textAlign: 'center'}}>
-                    User portfolio
+                    Portfolio
                 </h2>
             </div>
             <div className={'chart-container__crypto-names'}>

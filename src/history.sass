@@ -22,7 +22,7 @@
   &__navigation
     display: flex
     width: 100%
-    height: 30px
+    min-height: 30px
     align-items: center
     justify-content: flex-start
     border-radius: 10px
@@ -36,31 +36,24 @@
 .new-transaction
   display: flex
   position: absolute
-  width: 100vw
-  height: 100vh
+  background-color: #a8a8a8
+  width: 500px
+  height: 600px
   top: 0
   left: 0
   align-items: center
   justify-content: center
-
-  &__container
-    display: flex
-    background-color: #a8a8a8
-    width: 500px
-    height: 600px
-    border-radius: 10px
-    justify-content: center
-    align-items: center
-    padding: 30px
-    gap: 20px
+  border-radius: 10px
+  padding: 30px
+  flex-direction: column
 
   &__type-container
     display: flex
-    width: 50%
+    width: 100%
     height: 30px
     justify-content: space-around
     align-items: center
-    background-color: #555555
+    border-style: ridge
 
 ::-webkit-scrollbar
   width: 5px
