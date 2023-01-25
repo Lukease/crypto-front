@@ -3,10 +3,6 @@
 @import "home.css";
 @import "history.css";
 
-/**
-@import "home.css"; importowanie pliku home.css do głównego index.css
-**/
-
 #root {
     width: 100vw;
     height: 100vh;

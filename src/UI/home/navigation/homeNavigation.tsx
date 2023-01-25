@@ -15,10 +15,6 @@ export function HomeNavigation() {
                 <div>📜</div>
                 <div>History</div>
             </div>
-            <div className={'navbar__button'}>
-                <div>👥</div>
-                <div>Products</div>
-            </div>
         </div>
     )
 
