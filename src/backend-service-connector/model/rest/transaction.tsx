@@ -6,9 +6,9 @@ export class Transaction {
     private coin: string
     private amount: number
     private value: number
-    private ownerId: number
+    private ownerId: number| undefined
 
-    constructor(type: string, comment: string, date: Date, coin: string, amount: number, value: number, ownerId: number) {
+    constructor(type: string, comment: string, date: Date, coin: string, amount: number, value: number, ownerId: number | undefined) {
         this.type = type;
         this.comment = comment;
         this.date = date;
@@ -71,7 +71,7 @@ export class Transaction {
         this.value = value;
     }
 
-    getOwnerId(): number {
+    getOwnerId(): number | undefined {
         return this.ownerId;
     }
 

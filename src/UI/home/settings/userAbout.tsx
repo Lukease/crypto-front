@@ -1,9 +1,9 @@
 import React from 'react'
-import {UserDto} from '../../../backend-service-connector/model/rest/userDto'
+import {User} from '../../../backend-service-connector/model/rest/user'
 
 export function UserAbout(props: any) {
     const userService = props.userService
-    const loggedUser: UserDto = userService.getLogInUserFromLocalStorage()
+    const loggedUser: User = userService.getLogInUserFromLocalStorage()
 
     return (
         <div className={'user'}>

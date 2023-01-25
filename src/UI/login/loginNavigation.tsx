@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react'
 import {UserService} from '../../backend-service-connector/service'
-import {UserDto} from '../../backend-service-connector/model/rest/userDto'
+import {User} from '../../backend-service-connector/model/rest/user'
 
 function LoginNavigation(props: any) {
     const userService = props.userService
@@ -56,13 +56,13 @@ function LoginNavigation(props: any) {
     const register = async (e: any) => {
         e.preventDefault()
         const equalsPassword: boolean = password === confirmPassword
-        const allUsers: Array<UserDto> = await userService.getAllUsers()
-        const userLoginExist: UserDto | undefined = allUsers.find(user => user.login === login)
-        const userEmailExist: UserDto | undefined = allUsers.find(user => user.email === email)
+        const allUsers: Array<User> = await userService.getAllUsers()
+        const userLoginExist: User | undefined = allUsers.find(user => user.login === login)
+        const userEmailExist: User | undefined = allUsers.find(user => user.email === email)
         const userDontExist: boolean = !userLoginExist && !userEmailExist
 
         if (equalsPassword && userDontExist && userUnderstandPolity) {
-            const userDto: UserDto = new UserDto(undefined, login, password, email, undefined, undefined)
+            const userDto: User = new User(undefined, login, password, email, undefined, undefined)
             await userService.addNewUser(userDto)
             window.location.href = 'http://localhost:3000/home'
 
@@ -74,8 +74,8 @@ function LoginNavigation(props: any) {
         setMessageWhenRegisterUsedWrongData(equalsPassword, userLoginExist, userEmailExist)
     }
 
-    const setMessageWhenRegisterUsedWrongData = (equalsPassword: boolean, userLoginExist: UserDto | undefined,
-                                                 userEmailExist: UserDto | undefined) => {
+    const setMessageWhenRegisterUsedWrongData = (equalsPassword: boolean, userLoginExist: User | undefined,
+                                                 userEmailExist: User | undefined) => {
         /**
          * wyświetlanie błedu jezeli zostaną spełnione warunki np niepeprawy login
          * **/

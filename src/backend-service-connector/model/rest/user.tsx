@@ -1,4 +1,4 @@
-export class UserDto {
+export class User {
     id: number | undefined
     login: string
     password: string

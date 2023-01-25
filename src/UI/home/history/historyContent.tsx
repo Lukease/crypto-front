@@ -5,7 +5,7 @@ export function HistoryContent(props: any) {
     const userService = props.userService
     const [operationType, setOperationType] = useState('')
     const [isAddButtonClicked, setAddButtonClicked] = useState(false)
-    const [operationDate, setOperationDate] = useState('')
+    const [operationDate, setOperationDate] = useState(new Date())
     const [selectedCoin, setCoin] = useState('')
     const [coinValue, setCoinValue] = useState(0)
     const [coinAmount, setCoinAmount] = useState(0)
@@ -48,6 +48,7 @@ export function HistoryContent(props: any) {
 
     const setCoinNameAndValue = (event: any) => {
         event.preventDefault()
+
         const coinName = event.target.value
 
         setCoin(coinName)
@@ -64,22 +65,15 @@ export function HistoryContent(props: any) {
     }
 
     const addTransaction = (event: any) => {
-
         const selectedCoinValue = findSelectedCoinValue()
 
         setCoinValue(selectedCoinValue)
-        console.log(operationType + 'operation type')
-        console.log(userComment + 'userComment')
-        console.log(operationDate + 'date')
-        console.log(coinValue + 'coin value')
-        console.log(selectedCoinValue + 'coin value')
-        console.log(selectedCoin + 'selected Coin')
-        console.log(coinAmount + 'coin Amount')
 
         if (operationType && selectedCoin && coinValue && coinAmount) {
             setAllUserTransactions([...allUserTransactions,
-                (new Transaction(operationType, userComment, new Date(2013, 2, 12),
-                    selectedCoin, coinAmount, coinValue, 1))])
+                (new Transaction(operationType, userComment, operationDate,
+                    selectedCoin, coinAmount, coinValue, undefined))])
+
             setAddButtonClicked(!isAddButtonClicked)
         }
     }
@@ -89,6 +83,13 @@ export function HistoryContent(props: any) {
             {
                 isAddButtonClicked ?
                     <form className={'new-transaction'}>
+                        <div
+                            className={'new-transaction__container--exit'}
+                            onClick={() => setAddButtonClicked(false)}
+                        >
+                            X
+                        </div>
+                        <label className={'new-transaction__container--title'}>New Transaction</label>
                         <div className={'new-transaction__container'}>
                             <label className={'new-transaction__container--title'}>Type</label>
                             <div>
@@ -108,7 +109,7 @@ export function HistoryContent(props: any) {
                             <input
                                 type={'date'}
                                 min="2011-01-01"
-                                onChange={(event) => setOperationDate(event.target.value)}
+                                onChange={(event) => setOperationDate(new Date(event.target.value))}
                                 required
                             />
                         </div>
@@ -146,7 +147,7 @@ export function HistoryContent(props: any) {
                             <label className={'new-transaction__container--title'}>Amount</label>
                             <input
                                 type={'number'}
-                                onChange={(event) => setCoinAmount(parseInt(event.target.value))}
+                                onChange={(event) => setCoinAmount(parseFloat(event.target.value))}
                                 placeholder={`0 ${selectedCoin}`}
                                 required
                             >

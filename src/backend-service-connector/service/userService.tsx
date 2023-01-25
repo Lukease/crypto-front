@@ -1,17 +1,17 @@
-import {UserDto} from '../model/rest/userDto'
+import {User} from '../model/rest'
 import {Config} from '../config'
-import {UserLogIn} from "../model/rest/userLogIn"
+import {UserLogIn} from "../model/rest"
 import {cryptoChart} from "../../UI/home/types"
 
 export class UserService {
-    allUsers: Array<UserDto> = []
+    allUsers: Array<User> = []
     logInUser: UserLogIn | undefined
 
     async getAllUsers() {
         /**
          * funkcja która pobiera wszytskich uztykowników
          * **/
-        const users: Array<UserDto> = await fetch(Config.baseUrl + Config.getAllUsersPath, {
+        const users: Array<User> = await fetch(Config.baseUsersUrl + Config.getAllUsersPath, {
             method: 'GET'
         })
             .then((response) => {
@@ -27,11 +27,11 @@ export class UserService {
 
     }
 
-    async addNewUser(newUser: UserDto) {
+    async addNewUser(newUser: User) {
         /**
          * funkcja jako parametr otrzymuje użytkownika który zostaje przekazany do zapisania do backendu
          * **/
-        return await fetch(Config.baseUrl, {
+        return await fetch(Config.baseUsersUrl, {
             method: 'POST',
             headers: {'Content-Type': 'application/json', Accept: 'application/json'},
             body: JSON.stringify(newUser)
@@ -48,7 +48,7 @@ export class UserService {
     }
 
     removeUserByLogin(login: string) {
-        fetch(Config.baseUrl + Config.removeUserPath + login, {
+        fetch(Config.baseUsersUrl + Config.removeUserPath + login, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ export class UserService {
     }
 
     async getUserByLogin(login: string) {
-        await fetch(Config.baseUrl + Config.removeUserPath + login, {
+        await fetch(Config.baseUsersUrl + Config.removeUserPath + login, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ export class UserService {
     }
 
     editUserEmailById(userId: number, newEmail: string) {
-        fetch(Config.baseUrl + `/${userId}/${newEmail}`, {
+        fetch(Config.baseUsersUrl + `/${userId}/${newEmail}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -90,17 +90,8 @@ export class UserService {
             .catch(error => error)
     }
 
-    // editUserPasswordById(userId: number, newEmail: string) {
-    //     fetch(Config.baseUrl + `/${userId}/${newEmail}`, {
-    //         method: 'PUT',
-    //         headers: {'Content-Type': 'application/json', Accept: 'application/json',Authorization: this.actualSession!.getActiveToken()},
-    //     })
-    //         .then(response => response.json())
-    //         .catch(error => error)
-    // }
-
     editUserLoginById(userId: number, newEmail: string) {
-        fetch(Config.baseUrl + `/${userId}/${newEmail}`, {
+        fetch(Config.baseUsersUrl + `/${userId}/${newEmail}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -115,7 +106,7 @@ export class UserService {
     async logIn(login: string, password: string) {
         const userLogIn: UserLogIn = new UserLogIn(login, password)
 
-        return await fetch(Config.baseUrl + Config.logInUserPath, {
+        return await fetch(Config.baseUsersUrl + Config.logInUserPath, {
             method: 'POST',
             headers: {'Content-Type': 'application/json', Accept: 'application/json'},
             body: JSON.stringify(userLogIn)
@@ -124,6 +115,7 @@ export class UserService {
                 return response.json()
                     .then((data) => {
                         this.logInUser = data
+                        console.log(data)
                         this.setLogInUserToLocalStorage(data)
 
                         return data
