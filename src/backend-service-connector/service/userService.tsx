@@ -7,10 +7,11 @@ export class UserService {
     allUsers: Array<User> = []
     logInUser: UserLogIn | undefined
 
+    getActiveToken() {
+        return JSON.parse(localStorage.getItem('logInUser')!).activeToken
+    }
+
     async getAllUsers() {
-        /**
-         * funkcja która pobiera wszytskich uztykowników
-         * **/
         const users: Array<User> = await fetch(Config.baseUsersUrl + Config.getAllUsersPath, {
             method: 'GET'
         })
@@ -28,9 +29,6 @@ export class UserService {
     }
 
     async addNewUser(newUser: User) {
-        /**
-         * funkcja jako parametr otrzymuje użytkownika który zostaje przekazany do zapisania do backendu
-         * **/
         return await fetch(Config.baseUsersUrl, {
             method: 'POST',
             headers: {'Content-Type': 'application/json', Accept: 'application/json'},
@@ -47,57 +45,33 @@ export class UserService {
             })
     }
 
-    removeUserByLogin(login: string) {
-        fetch(Config.baseUsersUrl + Config.removeUserPath + login, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                // Authorization: this.currentSession!.getActiveToken()
-            },
-        })
-            .then(response => response.json())
-            .catch(error => error)
+    editUserLogin(newLogin: string) {
+        const activeToken: string = this.getActiveToken()
 
-        return login
-    }
-
-    async getUserByLogin(login: string) {
-        await fetch(Config.baseUsersUrl + Config.removeUserPath + login, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                // Authorization: this.currentSession!.getActiveToken()
-            },
-        })
-            .then(response => response.json())
-            .catch(error => error)
-
-        return login
-    }
-
-    editUserEmailById(userId: number, newEmail: string) {
-        fetch(Config.baseUsersUrl + `/${userId}/${newEmail}`, {
+        fetch(Config.baseUsersUrl + Config.editUserLoginPath, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
-                // Authorization: this.currentSession!.getActiveToken()
+                Authorization: activeToken
             },
+            body: JSON.stringify({login: newLogin})
         })
             .then(response => response.json())
             .catch(error => error)
     }
 
-    editUserLoginById(userId: number, newEmail: string) {
-        fetch(Config.baseUsersUrl + `/${userId}/${newEmail}`, {
+    editUserEmail(newEmail: string) {
+        const activeToken: string = this.getActiveToken()
+
+        fetch(Config.baseUsersUrl + Config.editUserEmailPath, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
-                // Authorization: this.currentSession!.getActiveToken()
+                Authorization: activeToken
             },
+            body: JSON.stringify({email: newEmail})
         })
             .then(response => response.json())
             .catch(error => error)
@@ -129,6 +103,7 @@ export class UserService {
 
     setLogInUserToLocalStorage(user: UserLogIn | undefined) {
         localStorage.setItem('logInUser', JSON.stringify(user))
+        window.dispatchEvent(new Event("storage"))
     }
 
     getLogInUserFromLocalStorage() {

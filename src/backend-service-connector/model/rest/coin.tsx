@@ -4,7 +4,8 @@ export class Coin {
     private value: number
 
 
-    constructor(name: string, value: number) {
+    constructor(id: number | undefined, name: string, value: number) {
+        this.id = id
         this.name = name
         this.value = value
     }

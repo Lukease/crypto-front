@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Coin, Transaction} from "../../../backend-service-connector/model/rest";
 
 export function HistoryContent(props: any) {
     const userService = props.userService
+    const transactionService = props.transactionService
     const [operationType, setOperationType] = useState('')
     const [isAddButtonClicked, setAddButtonClicked] = useState(false)
     const [operationDate, setOperationDate] = useState(new Date())
@@ -10,40 +11,49 @@ export function HistoryContent(props: any) {
     const [coinValue, setCoinValue] = useState(0)
     const [coinAmount, setCoinAmount] = useState(0)
     const [userComment, setUserComment] = useState('')
-    const [allUserTransactions, setAllUserTransactions] = useState([
-        new Transaction('deposit', 'od babuni', new Date(2013, 2, 12), 'BTC', 1, 22689.00, 1),
-        new Transaction('deposit', 'od dziadka', new Date(2017, 5, 12), 'LUNA', 123123131, 0.1, 1),
-        new Transaction('deposit', 'od brate', new Date(2011, 12, 12), 'XRP', 12313.23, 0.41, 1),
-        new Transaction('deposit', 'od babuni', new Date(2013, 2, 12), 'BTC', 1, 0.41, 1),
-    ])
+    const [allUserTransactions, setAllUserTransactions] = useState<Array<Transaction> | null>(null)
 
     const coinOptions: Array<Coin> = [
-        new Coin('BTC', 22689.00),
-        new Coin('ETH', 22689.00),
-        new Coin('XRP', 0.41),
-        new Coin('LUNA', 0.01),
-        new Coin('BTCGOLD', 89.00)
+        new Coin(undefined, 'BTC', 22689.00),
+        new Coin(undefined, 'ETH', 22689.00),
+        new Coin(undefined, 'XRP', 0.41),
+        new Coin(undefined, 'LUNA', 0.01),
+        new Coin(undefined, 'BTCGOLD', 89.00)
     ]
 
-    const renderAllUserHistory = () => {
-        return allUserTransactions.map((transaction, index) => {
-            const type = transaction.getType()
-            const amount = transaction.getAmount()
-            const coin = transaction.getCoin()
-            const value = transaction.getValue()
-            const comment = transaction.getComment()
-            const date = new Date(transaction.getDate()).toLocaleDateString()
+    const getTransactions = async () => {
+        const response = await transactionService.getAllUserTransactionsFromDb()
 
-            return <HistoryItem
-                type={type}
-                amount={amount}
-                coin={coin}
-                value={value}
-                comment={comment}
-                date={date}
-                key={index}
-            />
+        return response.map((res: any) => {
+            return new Transaction(res.id, res.type, res.comment, res.date, res.coin, res.amount, res.value, res.ownerId)
         })
+    }
+
+    useEffect(() => {
+        getTransactions().then((response: any) => setAllUserTransactions(response))
+    }, [])
+
+    const renderAllUserHistory = () => {
+        if (allUserTransactions) {
+            return allUserTransactions.map((transaction, index) => {
+                const type = transaction.getType()
+                const amount = transaction.getAmount()
+                const coin = transaction.getCoin()
+                const value = transaction.getValue()
+                const comment = transaction.getComment()
+                const date = new Date(transaction.getDate()).toLocaleDateString()
+
+                return <HistoryItem
+                    type={type}
+                    amount={amount}
+                    coin={coin}
+                    value={value}
+                    comment={comment}
+                    date={date}
+                    key={index}
+                />
+            })
+        }
     }
 
     const setCoinNameAndValue = (event: any) => {
@@ -67,14 +77,15 @@ export function HistoryContent(props: any) {
     const addTransaction = (event: any) => {
         const selectedCoinValue = findSelectedCoinValue()
 
+        event.preventDefault()
         setCoinValue(selectedCoinValue)
-
         if (operationType && selectedCoin && coinValue && coinAmount) {
-            setAllUserTransactions([...allUserTransactions,
-                (new Transaction(operationType, userComment, operationDate,
-                    selectedCoin, coinAmount, coinValue, undefined))])
+            const newTransaction: Transaction = new Transaction(undefined, operationType, userComment, operationDate,
+                selectedCoin, coinAmount, coinValue, undefined)
 
+            transactionService.addNewTransaction(newTransaction)
             setAddButtonClicked(!isAddButtonClicked)
+            setAllUserTransactions([...allUserTransactions!, newTransaction])
         }
     }
 
@@ -147,6 +158,7 @@ export function HistoryContent(props: any) {
                             <label className={'new-transaction__container--title'}>Amount</label>
                             <input
                                 type={'number'}
+                                step={"0.00000000001"}
                                 onChange={(event) => setCoinAmount(parseFloat(event.target.value))}
                                 placeholder={`0 ${selectedCoin}`}
                                 required
