@@ -15,9 +15,11 @@ export function UserAbout(props: any) {
 
     useEffect(() => {
         const loggedUser: User = userService.getLogInUserFromLocalStorage()
+
         setUserLogin(loggedUser.login)
         setUserEmail(loggedUser.email)
-    }, [User]);
+    }, [User])
+
     return (
         <div className={'user'}>
             <div className={'user__image'}></div>

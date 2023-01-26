@@ -7,25 +7,21 @@ export function EditUserInformation(props: any) {
     const [userEmail, setUserEmail] = useState('')
 
     const setNewUserDataToDb = (event: any, isLogin: boolean) => {
+        event.preventDefault()
+
+        const user: User = userService.getLogInUserFromLocalStorage()
+
         if (isLogin) {
-            event.preventDefault()
             setUserLogin(userLogin)
             userService.editUserLogin(userLogin)
-
-            const user: User = userService.getLogInUserFromLocalStorage()
-
             user.login = userLogin
-            userService.setLogInUserToLocalStorage(user)
         } else {
-            event.preventDefault()
             setUserEmail(userEmail)
             userService.editUserEmail(userEmail)
-
-            const user: User = userService.getLogInUserFromLocalStorage()
-
             user.email = userEmail
-            userService.setLogInUserToLocalStorage(user)
         }
+
+        userService.setLogInUserToLocalStorage(user)
     }
 
     return (
