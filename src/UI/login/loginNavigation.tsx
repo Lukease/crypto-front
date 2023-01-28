@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react'
 import {UserService} from '../../backend-service-connector/service'
-import {User} from '../../backend-service-connector/model/rest/user'
+import {User} from '../../backend-service-connector/model/rest'
 
 function LoginNavigation(props: any) {
     const userService = props.userService
@@ -14,41 +14,21 @@ function LoginNavigation(props: any) {
     const [isHoverRegister, setIsHoverRegister] = useState(false)
     const [userUnderstandPolity, setUserUnderstandPolity] = useState(false)
 
-    /**
-     * #3
-     * dzieki useState możemy przechowywać i uaktualniać jakiś stan tak jak np czy jestemy na stronie logowania czy rejestracji
-     * const [isSignInForm, setSignInForm] = useState(true)
-     *
-     * w naszym przypadku wartość domyślna to true żeby ją zmienić wystarczy napisać
-     * setSignInForm(false) lub setSignInForm(!isSignInForm) wykrzyknik oznacz wartość przeciwną)
-     * **/
     const signIn = async (e: any) => {
         setLoginMessage('')
         e.preventDefault()
-        /**
-         * #4
-         * e.preventDefault() wyłącza nam domyślne zachowanie które w naszym wypadku jest niepożądanym zachowaniem gdyż dochodzi
-         * do odświeżania strony i wypisywania z inputów loginu hasła itp
-         *
-         * async await musimy zadeklarować na początku funkcji że jest ona asynchroniczna czyli ma poczekać
-         * na ukończenie funcji/pobranie danych, dzieki await pokazujemy w którym momencie program ma poczekać
-         * async await zwraca nam promisa
-         * **/
+
         const userLogged = await userService.logIn(login, password)
 
         if (userLogged) {
             window.location.href = 'http://localhost:3000/home'
-            /**
-             * w przypadku porpawnego logwoania możemy wyrenderować kolejny komponent poprzez zmanę lokacji href
-             * **/
+
         } else {
             const incorrectData = 'Incorrect login or password'
 
             setLoginMessage(incorrectData)
         }
-        /**
-         *
-         * **/
+
         setPassword('')
         setLogin('')
     }
@@ -64,11 +44,7 @@ function LoginNavigation(props: any) {
         if (equalsPassword && userDontExist && userUnderstandPolity) {
             const userDto: User = new User(undefined, login, password, email, undefined, undefined)
             await userService.addNewUser(userDto)
-            window.location.href = 'http://localhost:3000/home'
-
-            /**
-             * jeżeli warunek zostanie spełniony tworzy się uzytkownik, userService wyśle nowego uzytkownika do zapisania do backendu
-             * **/
+            window.location.reload()
         }
 
         setMessageWhenRegisterUsedWrongData(equalsPassword, userLoginExist, userEmailExist)

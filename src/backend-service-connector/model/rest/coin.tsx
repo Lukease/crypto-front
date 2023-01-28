@@ -1,13 +1,13 @@
 export class Coin {
     private id: number | undefined
     private name: string
-    private value: number
+    private price: number
 
 
-    constructor(id: number | undefined, name: string, value: number) {
+    constructor(id: number | undefined, name: string, price: number) {
         this.id = id
         this.name = name
-        this.value = value
+        this.price = price
     }
 
     setId(value: number) {
@@ -22,11 +22,11 @@ export class Coin {
         this.name = value
     }
 
-    getValue(): number {
-        return this.value
+    getPrice(): number {
+        return this.price
     }
 
-    setValue(value: number) {
-        this.value = value
+    setPrice(value: number) {
+        this.price = value
     }
 }

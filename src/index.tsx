@@ -9,6 +9,7 @@ import {SettingsMenu} from "./UI/home/settings/settingsMenu";
 import {Home} from "./UI/home/dashboard/home";
 import {HistoryContainer} from "./UI/home/history";
 import {TransactionService} from "./backend-service-connector/service/transactionService";
+import {WalletService} from "./backend-service-connector/service/walletService";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -16,6 +17,7 @@ const root = ReactDOM.createRoot(
 
 const userService = new UserService()
 const transactionService = new TransactionService()
+const walletService = new WalletService()
 
 root.render(
     <Router>
@@ -35,7 +37,7 @@ root.render(
             <Route
                 path={'/home'}
                 element={
-                    <Home userService={userService}
+                    <Home userService={userService} walletService={walletService}
                     />}
             />
             <Route

@@ -5,17 +5,17 @@ export class Transaction {
     private date: Date
     private coin: string
     private amount: number
-    private value: number
+    private price: number
     private ownerId: number | undefined
 
-    constructor(id: number | undefined, type: string, comment: string, date: Date, coin: string, amount: number, value: number, ownerId: number | undefined) {
+    constructor(id: number | undefined, type: string, comment: string, date: Date, coin: string, amount: number, price: number, ownerId: number | undefined) {
         this.id =id
         this.type = type;
         this.comment = comment;
         this.date = date;
         this.coin = coin;
         this.amount = amount;
-        this.value = value;
+        this.price = price;
         this.ownerId = ownerId;
     }
 
@@ -64,12 +64,12 @@ export class Transaction {
         this.amount = value;
     }
 
-    getValue(): number {
-        return this.value;
+    getPrice(): number {
+        return this.price;
     }
 
-    setValue(value: number) {
-        this.value = value;
+    setPrice(value: number) {
+        this.price = value;
     }
 
     getOwnerId(): number | undefined {
