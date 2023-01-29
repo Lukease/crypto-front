@@ -1,6 +1,6 @@
-import {PieChart} from "react-minimal-pie-chart";
-import React from "react";
-import {cryptoChart} from "../types";
+import {PieChart} from 'react-minimal-pie-chart'
+import React from 'react'
+import {cryptoChart} from '../types'
 
 export function Chart(props: any) {
     const userService = props.userService
