@@ -1,47 +1,48 @@
 import {CoinUser} from './coinUser'
 
 export class Wallet {
-    private id: number
-    private totalValue: number
-    private trueTotalValue: number
-    private allUserCoins: Array<CoinUser> | undefined
+    private userId: number
+    private investmentsValue: number
+    private currentValue: number
+    private allCoinsInWallet: Array<CoinUser> | undefined
 
-    constructor(id: number, totalValue: number, trueTotalValue: number, allUserCoins: Array<CoinUser>) {
-        this.id = id;
-        this.totalValue = totalValue;
-        this.trueTotalValue = trueTotalValue;
-        this.allUserCoins = allUserCoins;
+    constructor(userId: number, investmentsValue: number, currentValue: number, allCoinsInWallet: Array<CoinUser>) {
+        this.userId = userId
+        this.investmentsValue = investmentsValue
+        this.currentValue = currentValue
+        this.allCoinsInWallet = allCoinsInWallet
     }
 
-    getId(): number {
-        return this.id;
+
+    getUserId(): number {
+        return this.userId;
     }
 
-    setId(value: number) {
-        this.id = value;
+    setUserId(value: number) {
+        this.userId = value;
     }
 
-    getTotalValue(): number {
-        return this.totalValue;
+    getInvestmentsValue(): number {
+        return this.investmentsValue;
     }
 
-    setTotalValue(value: number) {
-        this.totalValue = value;
+    setInvestmentsValue(value: number) {
+        this.investmentsValue = value;
     }
 
-    getTrueTotalValue(): number {
-        return this.trueTotalValue;
+    getCurrentValue(): number {
+        return this.currentValue;
     }
 
-    setTrueTotalValue(value: number) {
-        this.trueTotalValue = value;
+    setCurrentValue(value: number) {
+        this.currentValue = value;
     }
 
-    getAllUserCoins(): Array<CoinUser> | undefined {
-        return this.allUserCoins;
+    getAllCoinsInWallet(): Array<CoinUser> | undefined {
+        return this.allCoinsInWallet;
     }
 
-    setAllUserCoins(value: Array<CoinUser> | undefined) {
-        this.allUserCoins = value;
+    setAllCoinsInWallet(value: Array<CoinUser> | undefined) {
+        this.allCoinsInWallet = value;
     }
 }

@@ -23,6 +23,7 @@ function Dashboard(props: any) {
 
     useEffect(() => {
         getWallet().then((response: any) => setUserWallet(response))
+
     }, [])
 
     const renderWallet = () => {

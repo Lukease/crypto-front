@@ -14,7 +14,6 @@ import {WalletService} from "./backend-service-connector/service/walletService";
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
-
 const userService = new UserService()
 const transactionService = new TransactionService()
 const walletService = new WalletService()
