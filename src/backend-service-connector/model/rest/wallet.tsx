@@ -1,12 +1,13 @@
 import {CoinUser} from './coinUser'
+import {CoinInWallet} from "./coinInWallet";
 
 export class Wallet {
-    private userId: number
-    private investmentsValue: number
-    private currentValue: number
-    private allCoinsInWallet: Array<CoinUser> | undefined
+    userId: number
+    investmentsValue: number
+    currentValue: number
+    allCoinsInWallet: Array<CoinInWallet> | undefined
 
-    constructor(userId: number, investmentsValue: number, currentValue: number, allCoinsInWallet: Array<CoinUser>) {
+    constructor(userId: number, investmentsValue: number, currentValue: number, allCoinsInWallet: Array<CoinInWallet>) {
         this.userId = userId
         this.investmentsValue = investmentsValue
         this.currentValue = currentValue
@@ -38,11 +39,11 @@ export class Wallet {
         this.currentValue = value;
     }
 
-    getAllCoinsInWallet(): Array<CoinUser> | undefined {
+    getAllCoinsInWallet(): Array<CoinInWallet> | undefined {
         return this.allCoinsInWallet;
     }
 
-    setAllCoinsInWallet(value: Array<CoinUser> | undefined) {
+    setAllCoinsInWallet(value: Array<CoinInWallet> | undefined) {
         this.allCoinsInWallet = value;
     }
 }

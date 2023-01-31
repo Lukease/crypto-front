@@ -15,35 +15,84 @@ export function HomeContext(props: any) {
 function Dashboard(props: any) {
     const userService = props.userService
     const walletService = props.walletService
+    let randomColor = require('randomcolor')
+    const [color, setColor] = useState<Array<any>>([])
     const [userWallet, setUserWallet] = useState<Wallet | null>(null)
 
     const getWallet = async () => {
-        return await walletService.getUserWalletFromDb()
+        const response = await walletService.getUserWalletFromDb()
+
+        return new Wallet(response.userId, response.investmentsValue, response.currentValue, response.allCoinsInWallet)
     }
 
     useEffect(() => {
         getWallet().then((response: any) => setUserWallet(response))
-
     }, [])
 
-    const renderWallet = () => {
+    useEffect(() => {
+        let arrayOfColors: Array<any> = []
 
+        for (let i = 0; i < 5; i++) {
+            const color = randomColor()
+
+            arrayOfColors = arrayOfColors.concat(color)
+        }
+
+        setColor(arrayOfColors)
+    }, [])
+
+    const renderCoinsInfo = () => {
+        return userWallet?.allCoinsInWallet?.map((coin, index) => {
+
+            return (
+                <DashboardItem
+                    title={`${coin.coinUserDto.name} return In %`}
+                    value={`${(Math.round(coin.returnInPercent * 100) / 100).toFixed(2)}`}
+                    description={`return total ${(Math.round(coin.returnTotal * 100) / 100).toFixed(2)}`}
+                    icon={'🪙'}
+                    color={color[index]}
+                    key={index}
+                />
+
+            )
+        })
+    }
+
+    const renderWallet = () => {
+        return (
+            <div className={'dashboard__container'}>
+                <DashboardItem title={'Total Value'}
+                               value={`$${(Math.round(userWallet?.getCurrentValue()! * 100) / 100).toFixed(2)}`}
+                               description={``}
+                               icon={'💰'}
+                               color={color[0]}
+                />
+                <DashboardItem title={'Investments Value'}
+                               value={`$${(Math.round(userWallet?.getInvestmentsValue()! * 100) / 100).toFixed(2)}`}
+                               description={''}
+                               icon={'💵'}
+                               color={color[1]}
+                />
+                {
+                    userWallet?.getAllCoinsInWallet() ?
+                        renderCoinsInfo()
+                        : null
+                }
+                {
+                    userWallet?.getAllCoinsInWallet() ?
+                        <Chart userWallet={userWallet}/>
+                        : null
+                }
+            </div>
+        )
     }
 
     return (
         <div className={'dashboard'}>
             <div style={{height: '10%'}}></div>
-            <div className={'dashboard__container'}>
-                <DashboardItem title={'Total Value'} value={'$24k'} description={12} icon={'💰'}
-                               color={'red'}/>
-                <DashboardItem title={'First Transaction'} value={'22.12.2013'} description={''}
-                               icon={'👥'} color={'green'}/>
-                <DashboardItem title={'Total Transactions'} value={'6 Transactions'} description={''} icon={'💸'}
-                               color={'yellow'}/>
-                <DashboardItem title={'Total Profit'} value={'3%'} description={-2013} icon={'$'}
-                               color={'blue'}/>
-                <Chart userService={userService}/>
-            </div>
+            {
+                renderWallet()
+            }
         </div>
     )
 }
@@ -61,9 +110,8 @@ function DashboardItem(props: any) {
                             <div
                                 style={{color: props.description >= 0 ? 'green' : 'red'}}
                             >
-                                {`${props.description}%` }
+                                {`${props.description}`}
                             </div>
-                            <div>Since Last Month</div>
                         </div>
                         : null
                 }

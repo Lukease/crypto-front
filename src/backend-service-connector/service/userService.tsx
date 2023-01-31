@@ -89,7 +89,6 @@ export class UserService {
                 return response.json()
                     .then((data) => {
                         this.logInUser = data
-                        console.log(data)
                         this.setLogInUserToLocalStorage(data)
 
                         return data

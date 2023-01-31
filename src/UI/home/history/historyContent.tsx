@@ -15,10 +15,10 @@ export function HistoryContent(props: any) {
 
     const coinOptions: Array<Coin> = [
         new Coin(undefined, 'BTC', 22689.00),
-        new Coin(undefined, 'ETH', 22689.00),
-        new Coin(undefined, 'XRP', 0.41),
-        new Coin(undefined, 'LUNA', 0.01),
-        new Coin(undefined, 'BTCGOLD', 89.00)
+        new Coin(undefined, 'ETH', 2451.97),
+        new Coin(undefined, 'XRP', 4.90),
+        new Coin(undefined, 'LUNA', 1.007),
+        new Coin(undefined, 'Cardano', 1.9)
     ]
 
     const getTransactions = async () => {
@@ -59,11 +59,16 @@ export function HistoryContent(props: any) {
 
     const setCoinNameAndValue = (event: any) => {
         event.preventDefault()
-        setCoin(event.target.value)
 
-        if (selectedCoin){
-           const coinPrice = coinOptions.find(coin => coin.getName() === selectedCoin)!.getPrice()
+        const coinName = event.target.value
+
+        setCoin(coinName)
+
+        if (coinName) {
+            const coinPrice = coinOptions.find(coin => coin.getName() === coinName)!.getPrice()
             setCoinPrice(coinPrice)
+        } else {
+            setCoinPrice(0)
         }
     }
 
@@ -148,7 +153,7 @@ export function HistoryContent(props: any) {
                             <label className={'new-transaction__container--title'}>Amount</label>
                             <input
                                 type={'number'}
-                                step={"0.000000001"}
+                                step={"0.0001"}
                                 onChange={(event) => setCoinAmount(parseFloat(event.target.value))}
                                 placeholder={`0 ${selectedCoin}`}
                                 required

@@ -42,6 +42,7 @@
   background-color: rgba(238, 236, 236, 0.86)
   width: 30%
   min-height: 30%
+  max-height: 50%
   top: 30%
   left: 40%
   align-items: center
@@ -51,6 +52,7 @@
   flex-direction: row
   flex-wrap: wrap
   gap: 20px
+  overflow-y: auto
 
   &__container
     display: flex
@@ -96,3 +98,7 @@
 ::-webkit-scrollbar-thumb:hover
   background: #555
 
+input[type="number"]
+  width: 90%
+  height: 25px
+  font-weight: bold

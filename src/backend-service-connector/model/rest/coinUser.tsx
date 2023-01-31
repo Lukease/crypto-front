@@ -1,46 +1,55 @@
 export class CoinUser {
-    private id: number
-    private name: string
-    private value: number
-    private amount: number
+    id: number
+    name: string
+    amount: string
+    currentPrice: number
+    currentValue: number
 
-    constructor(id: number, name: string, value: number, amount: number) {
-        this.id = id
-        this.name = name
-        this.value = value
-        this.amount = amount
+    constructor(id: number, name: string, amount: string, currentPrice: number, currentValue: number) {
+        this.id = id;
+        this.name = name;
+        this.amount = amount;
+        this.currentPrice = currentPrice;
+        this.currentValue = currentValue;
     }
 
-
     getId(): number {
-        return this.id
+        return this.id;
     }
 
     setId(value: number) {
-        this.id = value
+        this.id = value;
     }
 
     getName(): string {
-        return this.name
+        return this.name;
     }
 
     setName(value: string) {
-        this.name = value
+        this.name = value;
     }
 
-    getValue(): number {
-        return this.value
-    }
-
-    setValue(value: number) {
-        this.value = value
-    }
-
-    getAmount(): number {
+    getAmount(): string {
         return this.amount;
     }
 
-    setAmount(value: number) {
+    setAmount(value: string) {
         this.amount = value;
+    }
+
+    getCurrentPrice(): number {
+        return this.currentPrice;
+    }
+
+    setCurrentPrice(value: number) {
+        this.currentPrice = value;
+    }
+
+    getCurrentValue(): number {
+        return this.currentValue;
+    }
+
+    setCurrentValue(value: number) {
+        this.currentValue = value;
     }
 }
