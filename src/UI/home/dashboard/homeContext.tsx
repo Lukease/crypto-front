@@ -3,17 +3,15 @@ import {Chart} from "./chart";
 import {Transaction, Wallet} from "../../../backend-service-connector/model/rest";
 
 export function HomeContext(props: any) {
-    const userService = props.userService
     const walletService = props.walletService
 
     return (
 
-        <Dashboard userService={userService} walletService={walletService}/>
+        <Dashboard walletService={walletService}/>
     )
 }
 
 function Dashboard(props: any) {
-    const userService = props.userService
     const walletService = props.walletService
     let randomColor = require('randomcolor')
     const [color, setColor] = useState<Array<any>>([])
@@ -46,11 +44,12 @@ function Dashboard(props: any) {
 
             return (
                 <DashboardItem
-                    title={`${coin.coinUserDto.name} return In %`}
-                    value={`${(Math.round(coin.returnInPercent * 100) / 100).toFixed(2)}`}
-                    description={`return total ${(Math.round(coin.returnTotal * 100) / 100).toFixed(2)}`}
+                    title={`${coin.coinUserDto.name} return`}
+                    value={`${(Math.round(coin.returnTotal * 100) / 100).toFixed(2)}`}
+                    description={(Math.round(coin.returnInPercent * 100) / 100).toFixed(2)}
                     icon={'🪙'}
                     color={color[index]}
+                    currentCoinPrice={coin.coinUserDto.currentPrice}
                     key={index}
                 />
 
@@ -59,6 +58,8 @@ function Dashboard(props: any) {
     }
 
     const renderWallet = () => {
+        const investmentInPercent = (userWallet?.getCurrentValue()! * 100) / userWallet?.getInvestmentsValue()! - 100
+
         return (
             <div className={'dashboard__container'}>
                 <DashboardItem title={'Total Value'}
@@ -69,7 +70,7 @@ function Dashboard(props: any) {
                 />
                 <DashboardItem title={'Investments Value'}
                                value={`$${(Math.round(userWallet?.getInvestmentsValue()! * 100) / 100).toFixed(2)}`}
-                               description={''}
+                               description={(Math.round(investmentInPercent * 100) / 100).toFixed(2)}
                                icon={'💵'}
                                color={color[1]}
                 />
@@ -110,11 +111,15 @@ function DashboardItem(props: any) {
                             <div
                                 style={{color: props.description >= 0 ? 'green' : 'red'}}
                             >
-                                {`${props.description}`}
+                                {`${props.description}%`}
                             </div>
                         </div>
                         : null
                 }
+                {
+                    props.currentCoinPrice ?
+                        <div style={{marginTop: '10px'}}>{`coin current price: ${props.currentCoinPrice}$`}</div>
+                        : null}
             </div>
             <li className={'dashboard__item--icon'} style={{backgroundColor: props.color}}>{props.icon}</li>
         </div>

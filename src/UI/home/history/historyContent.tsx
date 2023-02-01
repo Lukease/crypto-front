@@ -14,8 +14,8 @@ export function HistoryContent(props: any) {
     const [allUserTransactions, setAllUserTransactions] = useState<Array<Transaction> | null>(null)
 
     const coinOptions: Array<Coin> = [
-        new Coin(undefined, 'BTC', 22689.00),
-        new Coin(undefined, 'ETH', 2451.97),
+        new Coin(undefined, 'BTC', 1000.00),
+        new Coin(undefined, 'ETH', 2000.00),
         new Coin(undefined, 'XRP', 4.90),
         new Coin(undefined, 'LUNA', 1.007),
         new Coin(undefined, 'Cardano', 1.9)

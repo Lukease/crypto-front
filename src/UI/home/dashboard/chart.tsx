@@ -1,8 +1,7 @@
 import {PieChart} from 'react-minimal-pie-chart'
 import React, {useEffect, useState} from 'react'
 import {cryptoChart} from '../types'
-import {CoinInWallet} from "../../../backend-service-connector/model/rest/coinInWallet";
-
+import {CoinInWallet} from '../../../backend-service-connector/model/rest'
 
 export function Chart(props: any) {
     const userWallet = props.userWallet
@@ -27,7 +26,10 @@ export function Chart(props: any) {
         return allUserCoins.map((crypto, index) => {
 
             return (
-                <CryptoInChart key={index} color={color[index]} title={crypto.coinUserDto.name}/>
+                <CryptoInChart
+                    key={index}
+                    color={color[index]}
+                    title={`${crypto.coinUserDto.name} ${(Math.round(crypto.walletPercent * 100) / 100).toFixed(2)}%`}/>
             )
         })
     }
@@ -41,8 +43,6 @@ export function Chart(props: any) {
 
         return chartData
     })
-
-
 
     return (
         <div className={'chart-container'}>
