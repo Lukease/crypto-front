@@ -9,8 +9,12 @@ export class Config {
     static readonly baseTransactionsUrl = 'http://localhost:8080/transactions'
     static readonly getAllTransactionsPath = '/get-all'
     static readonly getAllUserTransactionsPath = '/all-transactions'
+    static readonly getAllCoinsInfoPath = '/get-coins-prices'
+    static readonly deleteTransactionPath = '/delete-transaction?transactionId='
 
     static readonly baseWalletUrl = 'http://localhost:8080/wallet'
+
+
     /**
      * w klasie config bedziemy przetrzymywali sciezki do fetch aby w razie konieczności edytowac je w jednym miejscu i dla przejzystości kodu
      * **/

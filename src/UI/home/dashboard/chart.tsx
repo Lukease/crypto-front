@@ -29,7 +29,8 @@ export function Chart(props: any) {
                 <CryptoInChart
                     key={index}
                     color={color[index]}
-                    title={`${crypto.coinUserDto.name} ${(Math.round(crypto.walletPercent * 100) / 100).toFixed(2)}%`}/>
+                    title={`${crypto.coinUserDto.name} ${(Math.round(crypto.walletPercent * 100) / 100).toFixed(2)}%`}
+                />
             )
         })
     }

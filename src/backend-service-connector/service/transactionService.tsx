@@ -53,9 +53,10 @@ export class TransactionService {
             .catch(err => alert(err))
     }
 
-    async getAllCoinOptions() {
+    async getAllCoins() {
         const activeToken: string = this.getActiveToken()
-        return await fetch(Config.baseTransactionsUrl + Config.getAllUserTransactionsPath, {
+
+        return await fetch(Config.baseTransactionsUrl + Config.getAllCoinsInfoPath, {
             method: 'GET',
             headers: {
                 Authorization: activeToken
@@ -63,5 +64,16 @@ export class TransactionService {
         })
             .then(res => res.json())
             .catch(err => alert(err))
+    }
+
+    async deleteUserTransaction(transactionId: number) {
+        const activeToken: string = this.getActiveToken()
+
+        return await fetch(Config.baseTransactionsUrl + Config.deleteTransactionPath + transactionId, {
+            method: 'DELETE',
+            headers: {
+                Authorization: activeToken
+            },
+        })
     }
 }

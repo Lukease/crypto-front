@@ -11,14 +11,7 @@ export function HistoryContent(props: any) {
     const [coinAmount, setCoinAmount] = useState(0)
     const [userComment, setUserComment] = useState('')
     const [allUserTransactions, setAllUserTransactions] = useState<Array<Transaction> | null>(null)
-
-    const coinOptions: Array<Coin> = [
-        new Coin(undefined, 'BTC', 1000.00),
-        new Coin(undefined, 'ETH', 2000.00),
-        new Coin(undefined, 'XRP', 4.90),
-        new Coin(undefined, 'LUNA', 1.007),
-        new Coin(undefined, 'Cardano', 1.9)
-    ]
+    const [allCoins, setAllCoins] = useState<Array<Coin> | null>(null)
 
     const getTransactions = async () => {
         const response: Array<any> = await transactionService.getAllUserTransactionsFromDb()
@@ -26,11 +19,38 @@ export function HistoryContent(props: any) {
         return response.map((res: any) => {
             return new Transaction(res.id, res.type, res.comment, res.date, res.coin, res.amount, res.price, res.ownerId)
         })
+    }
 
+    const getAllCoinsInfo = async () => {
+        const response: Array<any> = await transactionService.getAllCoins()
+
+        return response.map((res: any) => {
+            return new Coin(undefined, res.name, res.price)
+        })
+
+    }
+
+    function HistoryItem(props: any) {
+
+        return (
+            <div className={'history__navigation'} style={props.style}>
+                <input type={'checkbox'} id={props.id} onClick={event => deleteUserTransaction(event.target)}></input>
+                <p
+                    className={'history__navigation--item'}
+                    style={{color: props.type === 'deposit' ? 'green' : 'red'}}
+                >{props.type}</p>
+                <p className={'history__navigation--item'}>{props.amount}</p>
+                <p className={'history__navigation--item'}>{props.coin}</p>
+                <p className={'history__navigation--item'}>{`${props.price} USD`}</p>
+                <p className={'history__navigation--item'}>{props.comment}</p>
+                <p className={'history__navigation--item'}>{props.date}</p>
+            </div>
+        )
     }
 
     useEffect(() => {
         getTransactions().then((response: any) => setAllUserTransactions(response))
+        getAllCoinsInfo().then((response: any) => setAllCoins(response))
     }, [])
 
     const renderAllUserHistory = () => {
@@ -44,6 +64,7 @@ export function HistoryContent(props: any) {
                 const date = new Date(transaction.getDate()).toLocaleDateString()
 
                 return <HistoryItem
+                    id={transaction.getId()}
                     type={type}
                     amount={amount}
                     coin={coin}
@@ -64,23 +85,40 @@ export function HistoryContent(props: any) {
         setCoin(coinName)
 
         if (coinName) {
-            const coinPrice = coinOptions.find(coin => coin.getName() === coinName)!.getPrice()
+            const coinPrice = allCoins!.find(coin => coin.getName() === coinName)!.getPrice()
             setCoinPrice(coinPrice)
         } else {
             setCoinPrice(0)
         }
     }
 
+    const setCoinAmountToTypeOperation = () => {
+        const negativeNumber = -Math.abs(coinAmount)
+        const positiveNumber = Math.abs(coinAmount)
+
+        operationType === 'withdraw' ? setCoinAmount(negativeNumber) : setCoinAmount(positiveNumber)
+    }
+
     const addTransaction = (event: any) => {
         event.preventDefault()
         if (operationType && selectedCoin && coinPrice && coinAmount) {
+
+            setCoinAmountToTypeOperation()
+
             const newTransaction: Transaction = new Transaction(undefined, operationType, userComment, operationDate,
-                selectedCoin, coinAmount, coinPrice, undefined)
+                selectedCoin, operationType === 'withdraw' ? -Math.abs(coinAmount) : Math.abs(coinAmount), coinPrice, undefined)
 
             transactionService.addNewTransaction(newTransaction)
             setAddButtonClicked(!isAddButtonClicked)
             setAllUserTransactions([...allUserTransactions!, newTransaction])
         }
+    }
+
+    const deleteUserTransaction = (event: any) => {
+        const transactionId = event.id
+
+        transactionService.deleteUserTransaction(transactionId)
+        window.location.reload()
     }
 
     return (
@@ -132,7 +170,7 @@ export function HistoryContent(props: any) {
                                 </option>}
 
                                 {
-                                    coinOptions.map((coin, index) => (
+                                    allCoins!.map((coin, index) => (
                                         <option
                                             value={coin.getName()}
                                             key={index}
@@ -200,18 +238,4 @@ export function HistoryContent(props: any) {
         </div>
     )
 
-}
-
-function HistoryItem(props: any) {
-
-    return (
-        <div className={'history__navigation'} style={props.style}>
-            <p className={'history__navigation--item'}>{props.type}</p>
-            <p className={'history__navigation--item'}>{props.amount}</p>
-            <p className={'history__navigation--item'}>{props.coin}</p>
-            <p className={'history__navigation--item'}>{`${props.price} USD`}</p>
-            <p className={'history__navigation--item'}>{props.comment}</p>
-            <p className={'history__navigation--item'}>{props.date}</p>
-        </div>
-    )
 }
