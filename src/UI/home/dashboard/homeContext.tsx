@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
-import {Chart} from "./chart";
-import {Transaction, Wallet} from "../../../backend-service-connector/model/rest";
+import React, {useEffect, useState} from 'react'
+import { Chart } from './chart'
+import { Wallet } from '../../../backend-service-connector/model/rest'
 
 export function HomeContext(props: any) {
     const walletService = props.walletService

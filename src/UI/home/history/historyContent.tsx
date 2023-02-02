@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from "react";
-import {Coin, Transaction} from "../../../backend-service-connector/model/rest";
+import React, {useEffect, useState} from 'react'
+import {Coin, Transaction} from '../../../backend-service-connector/model/rest'
 
 export function HistoryContent(props: any) {
-    const userService = props.userService
     const transactionService = props.transactionService
     const [operationType, setOperationType] = useState('')
     const [isAddButtonClicked, setAddButtonClicked] = useState(false)
