@@ -3,7 +3,6 @@ export class Coin {
     private name: string
     private price: number
 
-
     constructor(id: number | undefined, name: string, price: number) {
         this.id = id
         this.name = name

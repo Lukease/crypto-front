@@ -24,14 +24,15 @@ export function Chart(props: any) {
     const renderCryptoNames = () => {
 
         return allUserCoins.map((crypto, index) => {
-
-            return (
-                <CryptoInChart
-                    key={index}
-                    color={color[index]}
-                    title={`${crypto.coinUserDto.name} ${(Math.round(crypto.walletPercent * 100) / 100).toFixed(2)}%`}
-                />
-            )
+            if (crypto.walletPercent !== 0.00) {
+                return (
+                    <CryptoInChart
+                        key={index}
+                        color={color[index]}
+                        title={`${crypto.coinUserDto.name} ${(Math.round(crypto.walletPercent * 100) / 100).toFixed(2)}%`}
+                    />
+                )
+            }
         })
     }
 

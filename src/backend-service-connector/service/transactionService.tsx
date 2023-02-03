@@ -76,4 +76,16 @@ export class TransactionService {
             },
         })
     }
+
+    async getUserCoin(coinName: string) {
+        const activeToken: string = this.getActiveToken()
+
+        return await fetch(Config.baseTransactionsUrl + Config.getUserCoinPath + coinName, {
+            method: 'GET',
+            headers: {
+                Authorization: activeToken
+            },
+        })
+            .then(res => res.json())
+    }
 }

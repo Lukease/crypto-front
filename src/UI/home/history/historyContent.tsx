@@ -12,6 +12,7 @@ export function HistoryContent(props: any) {
     const [userComment, setUserComment] = useState('')
     const [allUserTransactions, setAllUserTransactions] = useState<Array<Transaction> | null>(null)
     const [allCoins, setAllCoins] = useState<Array<Coin> | null>(null)
+    const [coinMaxAmount, setCoinMaxAmount] = useState<number | undefined>(undefined)
 
     const getTransactions = async () => {
         const response: Array<any> = await transactionService.getAllUserTransactionsFromDb()
@@ -27,7 +28,11 @@ export function HistoryContent(props: any) {
         return response.map((res: any) => {
             return new Coin(undefined, res.name, res.price)
         })
+    }
 
+    const getUserCoin = async (coinName: string) => {
+
+        return await transactionService.getUserCoin(coinName)
     }
 
     function HistoryItem(props: any) {
@@ -76,13 +81,14 @@ export function HistoryContent(props: any) {
             })
         }
     }
-
     const setCoinNameAndValue = (event: any) => {
         event.preventDefault()
 
         const coinName = event.target.value
 
         setCoin(coinName)
+        getUserCoin(coinName)
+            .then(response => setCoinMaxAmount(response.amount))
 
         if (coinName) {
             const coinPrice = allCoins!.find(coin => coin.getName() === coinName)!.getPrice()
@@ -99,18 +105,35 @@ export function HistoryContent(props: any) {
         operationType === 'withdraw' ? setCoinAmount(negativeNumber) : setCoinAmount(positiveNumber)
     }
 
+    const makeTransaction = () => {
+        const newTransaction: Transaction = new Transaction(undefined, operationType, userComment, operationDate,
+            selectedCoin, operationType === 'withdraw' ? -Math.abs(coinAmount) : Math.abs(coinAmount), coinPrice, undefined)
+
+        transactionService.addNewTransaction(newTransaction)
+        setAddButtonClicked(!isAddButtonClicked)
+        setAllUserTransactions([...allUserTransactions!, newTransaction])
+        setCoinMaxAmount(0)
+        setCoin('')
+    }
+
+    const checkTypeAndMaxAmountTransaction = () => {
+        if (operationType === 'withdraw') {
+            if (coinAmount <= Math.abs(coinMaxAmount!)) {
+                makeTransaction()
+            } else {
+                alert('you dont have that much coin to withdraw')
+            }
+        } else if (operationType === 'deposit') {
+            makeTransaction()
+        }
+    }
+
     const addTransaction = (event: any) => {
         event.preventDefault()
+
         if (operationType && selectedCoin && coinPrice && coinAmount) {
-
-            setCoinAmountToTypeOperation()
-
-            const newTransaction: Transaction = new Transaction(undefined, operationType, userComment, operationDate,
-                selectedCoin, operationType === 'withdraw' ? -Math.abs(coinAmount) : Math.abs(coinAmount), coinPrice, undefined)
-
-            transactionService.addNewTransaction(newTransaction)
-            setAddButtonClicked(!isAddButtonClicked)
-            setAllUserTransactions([...allUserTransactions!, newTransaction])
+            // setCoinAmountToTypeOperation()
+            checkTypeAndMaxAmountTransaction()
         }
     }
 
@@ -119,6 +142,9 @@ export function HistoryContent(props: any) {
 
         transactionService.deleteUserTransaction(transactionId)
         window.location.reload()
+    }
+    const setCorrectAmountOfCoin = (event: any) => {
+        setCoinAmount(parseFloat(event.target.value))
     }
 
     return (
@@ -191,7 +217,7 @@ export function HistoryContent(props: any) {
                             <input
                                 type={'number'}
                                 step={"0.0001"}
-                                onChange={(event) => setCoinAmount(parseFloat(event.target.value))}
+                                onChange={(event) => setCorrectAmountOfCoin(event)}
                                 placeholder={`0 ${selectedCoin}`}
                                 required
                             >

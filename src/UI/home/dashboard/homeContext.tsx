@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import { Chart } from './chart'
-import { Wallet } from '../../../backend-service-connector/model/rest'
+import {Chart} from './chart'
+import {Wallet} from '../../../backend-service-connector/model/rest'
 
 export function HomeContext(props: any) {
     const walletService = props.walletService
@@ -41,19 +41,20 @@ function Dashboard(props: any) {
 
     const renderCoinsInfo = () => {
         return userWallet?.allCoinsInWallet?.map((coin, index) => {
+            if (coin.walletPercent !== 0.00) {
+                return (
+                    <DashboardItem
+                        title={`${coin.coinUserDto.name} return`}
+                        value={`${(Math.round(coin.returnTotal * 100) / 100).toFixed(2)}`}
+                        description={(Math.round(coin.returnInPercent * 100) / 100).toFixed(2)}
+                        icon={'🪙'}
+                        color={color[index]}
+                        currentCoinPrice={coin.coinUserDto.currentPrice}
+                        key={index}
+                    />
 
-            return (
-                <DashboardItem
-                    title={`${coin.coinUserDto.name} return`}
-                    value={`${(Math.round(coin.returnTotal * 100) / 100).toFixed(2)}`}
-                    description={(Math.round(coin.returnInPercent * 100) / 100).toFixed(2)}
-                    icon={'🪙'}
-                    color={color[index]}
-                    currentCoinPrice={coin.coinUserDto.currentPrice}
-                    key={index}
-                />
-
-            )
+                )
+            }
         })
     }
 

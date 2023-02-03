@@ -1,0 +1,1 @@
+export type {CoinUserDto} from './coinUserDto'

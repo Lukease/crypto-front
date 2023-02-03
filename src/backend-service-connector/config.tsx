@@ -11,6 +11,7 @@ export class Config {
     static readonly getAllUserTransactionsPath = '/all-transactions'
     static readonly getAllCoinsInfoPath = '/get-coins-prices'
     static readonly deleteTransactionPath = '/delete-transaction?transactionId='
+    static readonly getUserCoinPath = '/get-coin?name='
 
     static readonly baseWalletUrl = 'http://localhost:8080/wallet'
 
