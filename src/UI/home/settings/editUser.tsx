@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import {User, UserLogIn} from "../../../backend-service-connector/model/rest";
+import React, { useState } from 'react'
+import { User } from '../../../backend-service-connector/model/rest'
 
 export function EditUserInformation(props: any) {
     const userService = props.userService
@@ -26,8 +26,8 @@ export function EditUserInformation(props: any) {
 
     return (
         <div className={'editor-container'}>
-            <h1 className={'editor-container__title'}>Edit Profile</h1>
-            <label> Set login</label>
+            <h1 className={'editor-container__title'}> Edit Profile </h1>
+            <label> Set login </label>
             <form className={'editor-container__nav'}>
                 <input
                     type={'text'}

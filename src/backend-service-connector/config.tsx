@@ -14,9 +14,4 @@ export class Config {
     static readonly getUserCoinPath = '/get-coin?name='
 
     static readonly baseWalletUrl = 'http://localhost:8080/wallet'
-
-
-    /**
-     * w klasie config bedziemy przetrzymywali sciezki do fetch aby w razie konieczności edytowac je w jednym miejscu i dla przejzystości kodu
-     * **/
 }

@@ -1,5 +1,4 @@
-import {CoinUser} from './coinUser'
-import {CoinInWallet} from "./coinInWallet";
+import {CoinInWallet} from './coinInWallet'
 
 export class Wallet {
     userId: number
@@ -14,36 +13,35 @@ export class Wallet {
         this.allCoinsInWallet = allCoinsInWallet
     }
 
-
     getUserId(): number {
-        return this.userId;
+        return this.userId
     }
 
     setUserId(value: number) {
-        this.userId = value;
+        this.userId = value
     }
 
     getInvestmentsValue(): number {
-        return this.investmentsValue;
+        return this.investmentsValue
     }
 
     setInvestmentsValue(value: number) {
-        this.investmentsValue = value;
+        this.investmentsValue = value
     }
 
     getCurrentValue(): number {
-        return this.currentValue;
+        return this.currentValue
     }
 
     setCurrentValue(value: number) {
-        this.currentValue = value;
+        this.currentValue = value
     }
 
     getAllCoinsInWallet(): Array<CoinInWallet> | undefined {
-        return this.allCoinsInWallet;
+        return this.allCoinsInWallet
     }
 
     setAllCoinsInWallet(value: Array<CoinInWallet> | undefined) {
-        this.allCoinsInWallet = value;
+        this.allCoinsInWallet = value
     }
 }

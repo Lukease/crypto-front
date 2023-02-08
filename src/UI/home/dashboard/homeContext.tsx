@@ -1,12 +1,11 @@
-import React, {useEffect, useState} from 'react'
-import {Chart} from './chart'
-import {Wallet} from '../../../backend-service-connector/model/rest'
+import React, { useEffect, useState } from 'react'
+import { Chart } from './chart'
+import { Wallet } from '../../../backend-service-connector/model/rest'
 
 export function HomeContext(props: any) {
     const walletService = props.walletService
 
     return (
-
         <Dashboard walletService={walletService}/>
     )
 }
@@ -41,6 +40,7 @@ function Dashboard(props: any) {
 
     const renderCoinsInfo = () => {
         return userWallet?.allCoinsInWallet?.map((coin, index) => {
+
             if (coin.walletPercent !== 0.00) {
                 return (
                     <DashboardItem
@@ -119,10 +119,19 @@ function DashboardItem(props: any) {
                 }
                 {
                     props.currentCoinPrice ?
-                        <div style={{marginTop: '10px'}}>{`coin current price: ${props.currentCoinPrice}$`}</div>
+                        <div
+                            style={{marginTop: '10px'}}
+                        >
+                            {`coin current price: ${props.currentCoinPrice}$`}
+                        </div>
                         : null}
             </div>
-            <li className={'dashboard__item--icon'} style={{backgroundColor: props.color}}>{props.icon}</li>
+            <li
+                className={'dashboard__item--icon'}
+                style={{backgroundColor: props.color}}
+            >
+                {props.icon}
+            </li>
         </div>
     )
 }

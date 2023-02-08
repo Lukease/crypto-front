@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
-import {UserMenu} from '../navigation/userMenu'
-import {HomeNavigation} from '../navigation/homeNavigation'
-import {HomeContext} from './homeContext'
-import {WalletService} from '../../../backend-service-connector/service/walletService'
+import React, { Component } from 'react'
+import { UserMenu } from '../navigation/userMenu'
+import { HomeNavigation } from '../navigation/homeNavigation'
+import { HomeContext } from './homeContext'
+import { WalletService } from '../../../backend-service-connector/service'
 
 export class Home extends Component<any, any> {
     walletService: WalletService

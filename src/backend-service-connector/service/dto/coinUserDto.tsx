@@ -1,5 +1,5 @@
 export type CoinUserDto = {
-    id: number,
+    id: number
     name: string
     amount: number
 }

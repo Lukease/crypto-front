@@ -1,9 +1,9 @@
-import React, {Component} from "react";
-import {UserService} from "../../../backend-service-connector/service";
-import {UserAbout} from "./userAbout";
-import {EditUserInformation} from "./editUser";
-import {HomeNavigation} from "../navigation/homeNavigation";
-import {UserMenu} from "../navigation/userMenu";
+import React, { Component } from 'react'
+import { UserService } from '../../../backend-service-connector/service'
+import { UserAbout } from './userAbout'
+import { EditUserInformation } from './editUser'
+import { HomeNavigation } from '../navigation/homeNavigation'
+import { UserMenu } from '../navigation/userMenu'
 
 export class SettingsMenu extends Component<any, any> {
     userService: UserService

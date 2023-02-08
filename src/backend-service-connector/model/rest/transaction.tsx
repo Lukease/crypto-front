@@ -9,74 +9,74 @@ export class Transaction {
     private ownerId: number | undefined
 
     constructor(id: number | undefined, type: string, comment: string, date: Date, coin: string, amount: number, price: number, ownerId: number | undefined) {
-        this.id =id
-        this.type = type;
-        this.comment = comment;
-        this.date = date;
-        this.coin = coin;
-        this.amount = amount;
-        this.price = price;
-        this.ownerId = ownerId;
+        this.id = id
+        this.type = type
+        this.comment = comment
+        this.date = date
+        this.coin = coin
+        this.amount = amount
+        this.price = price
+        this.ownerId = ownerId
     }
 
 
     getId(): number | undefined {
-        return this.id;
+        return this.id
     }
 
     getType(): string {
-        return this.type;
+        return this.type
     }
 
     setType(value: string) {
-        this.type = value;
+        this.type = value
     }
 
     getComment(): string {
-        return this.comment;
+        return this.comment
     }
 
     setComment(value: string) {
-        this.comment = value;
+        this.comment = value
     }
 
     getDate(): Date {
-        return this.date;
+        return this.date
     }
 
     setDate(value: Date) {
-        this.date = value;
+        this.date = value
     }
 
     getCoin(): string {
-        return this.coin;
+        return this.coin
     }
 
     setCoin(value: string) {
-        this.coin = value;
+        this.coin = value
     }
 
     getAmount(): number {
-        return this.amount;
+        return this.amount
     }
 
     setAmount(value: number) {
-        this.amount = value;
+        this.amount = value
     }
 
     getPrice(): number {
-        return this.price;
+        return this.price
     }
 
     setPrice(value: number) {
-        this.price = value;
+        this.price = value
     }
 
     getOwnerId(): number | undefined {
-        return this.ownerId;
+        return this.ownerId
     }
 
     setOwnerId(value: number) {
-        this.ownerId = value;
+        this.ownerId = value
     }
 }

@@ -68,9 +68,6 @@ export function Chart(props: any) {
                 labelPosition={50}
                 lengthAngle={360}
                 lineWidth={100}
-                onClick={undefined}
-                onMouseOut={undefined}
-                onMouseOver={undefined}
                 paddingAngle={0}
                 radius={50}
                 rounded={false}

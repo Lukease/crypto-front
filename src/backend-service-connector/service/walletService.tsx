@@ -1,4 +1,4 @@
-import {Config} from "../config";
+import {Config} from '../config'
 
 export class WalletService {
     getActiveToken() {
@@ -17,6 +17,4 @@ export class WalletService {
             .then(res => res.json())
             .catch(err => alert(err))
     }
-
-
 }

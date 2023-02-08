@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react'
-import {Coin, Transaction} from '../../../backend-service-connector/model/rest'
+import React, { useEffect, useState } from 'react'
+import { Coin, Transaction } from '../../../backend-service-connector/model/rest'
 
 export function HistoryContent(props: any) {
     const transactionService = props.transactionService

@@ -1,9 +1,8 @@
-import React, {Component} from 'react'
-import {HomeNavigation} from '../navigation/homeNavigation'
-import {UserMenu} from '../navigation/userMenu'
-import {HistoryContent} from './historyContent'
-import {TransactionService} from "../../../backend-service-connector/service/transactionService"
-
+import React, { Component } from 'react'
+import { HomeNavigation } from '../navigation/homeNavigation'
+import { UserMenu } from '../navigation/userMenu'
+import { HistoryContent } from './historyContent'
+import { TransactionService } from '../../../backend-service-connector/service'
 
 export class HistoryContainer extends Component<any, any> {
     transactionService: TransactionService

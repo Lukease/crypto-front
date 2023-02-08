@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react'
-import {User} from '../../../backend-service-connector/model/rest'
+import React, { useEffect, useState } from 'react'
+import { User } from '../../../backend-service-connector/model/rest'
 
 export function UserAbout(props: any) {
     const userService = props.userService
@@ -7,7 +7,7 @@ export function UserAbout(props: any) {
     const [userEmail, setUserEmail] = useState('')
 
     window.addEventListener('storage', () => {
-       const changedData: User = userService.getLogInUserFromLocalStorage()
+        const changedData: User = userService.getLogInUserFromLocalStorage()
 
         setUserLogin(changedData.login)
         setUserEmail(changedData.email)

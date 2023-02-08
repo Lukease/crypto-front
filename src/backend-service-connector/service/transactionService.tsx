@@ -2,8 +2,6 @@ import {Transaction} from '../model/rest'
 import {Config} from '../config'
 
 export class TransactionService {
-    allUserTransactions = []
-
     getActiveToken() {
         return JSON.parse(localStorage.getItem('logInUser')!).activeToken
     }

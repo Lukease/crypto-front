@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 export function HomeNavigation() {
 
@@ -17,5 +17,4 @@ export function HomeNavigation() {
             </div>
         </div>
     )
-
 }

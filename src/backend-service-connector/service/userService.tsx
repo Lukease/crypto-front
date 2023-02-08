@@ -1,10 +1,8 @@
 import {User} from '../model/rest'
 import {Config} from '../config'
-import {UserLogIn} from "../model/rest"
-import {cryptoChart} from "../../UI/home/types"
+import {UserLogIn} from '../model/rest'
 
 export class UserService {
-    allUsers: Array<User> = []
     logInUser: UserLogIn | undefined
 
     getActiveToken() {
@@ -23,7 +21,6 @@ export class UserService {
             })
             .catch(error => console.log(error))
 
-        this.allUsers = users.map(value => value)
         return users
 
     }
@@ -107,14 +104,5 @@ export class UserService {
 
     getLogInUserFromLocalStorage() {
         return JSON.parse(localStorage.getItem('logInUser')!)
-    }
-
-
-    getDataForChart(): Array<cryptoChart> {
-        return ([
-            {color: '#E38627', title: 'Bitcoin', value: 40},
-            {color: '#C13C37', title: 'Ethereum', value: 35},
-            {color: '#6A2135', title: 'Luna', value: 10},
-        ])
     }
 }
