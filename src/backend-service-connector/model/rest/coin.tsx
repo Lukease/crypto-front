@@ -1,31 +1,19 @@
 export class Coin {
-    private id: number | undefined
-    private name: string
-    private price: number
+  private id: number | undefined
+  private readonly name: string
+  private readonly price: number
 
-    constructor(id: number | undefined, name: string, price: number) {
-        this.id = id
-        this.name = name
-        this.price = price
-    }
+  constructor(id: number | undefined, name: string, price: number) {
+    this.id = id
+    this.name = name
+    this.price = price
+  }
 
-    setId(value: number) {
-        this.id = value
-    }
+  getName(): string {
+    return this.name
+  }
 
-    getName(): string {
-        return this.name
-    }
-
-    setName(value: string) {
-        this.name = value
-    }
-
-    getPrice(): number {
-        return this.price
-    }
-
-    setPrice(value: number) {
-        this.price = value
-    }
+  getPrice(): number {
+    return this.price
+  }
 }

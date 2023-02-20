@@ -1,9 +1,8 @@
-import React, { Component, useState } from 'react'
-import { UserService } from '../../backend-service-connector/service'
+import React, {  useState } from 'react'
 import { User } from '../../backend-service-connector/model/rest'
 
-function LoginNavigation(props: any) {
-    const userService = props.userService
+export function LoginNavigation(props: any): JSX.Element {
+    const {userService} = props
     const [isSignInForm, setSignInForm] = useState(true)
     const [login, setLogin] = useState('')
     const [email, setEmail] = useState('')
@@ -54,7 +53,7 @@ function LoginNavigation(props: any) {
 
     const setMessageWhenRegisterUsedWrongData = (equalsPassword: boolean, userLoginExist: User | undefined,
                                                  userEmailExist: User | undefined) => {
-        let errorMessage: string = ''
+        let errorMessage = ''
 
         if (!equalsPassword) {
             errorMessage = 'Wrong password'
@@ -80,7 +79,7 @@ function LoginNavigation(props: any) {
     return (
         <form
             className={'form'}
-            onSubmit={(event) => isSignInForm ? signIn(event) : register(event)}
+            onSubmit={event => isSignInForm ? signIn(event) : register(event)}
         >
             <div className={'form__title'}>
                 {
@@ -194,20 +193,4 @@ function LoginNavigation(props: any) {
         </form>
     )
 
-}
-
-export class LoginOrRegister extends Component<any, any> {
-    userService: UserService
-
-    constructor(props: any) {
-        super(props)
-
-        this.userService = props.userService
-    }
-
-    render() {
-        return (
-            <LoginNavigation userService={this.userService}/>
-        )
-    }
 }

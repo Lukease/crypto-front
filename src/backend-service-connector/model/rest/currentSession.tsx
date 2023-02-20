@@ -1,9 +1,9 @@
 export class CurrentSession {
-    private activeToken: string
-    private validUtil: Date
+  private activeToken: string
+  private validUtil: Date
 
-    constructor(activeToken: string, validUtil: Date) {
-        this.activeToken = activeToken
-        this.validUtil = validUtil
-    }
+  constructor(activeToken: string, validUtil: Date) {
+    this.activeToken = activeToken
+    this.validUtil = validUtil
+  }
 }

@@ -3,13 +3,11 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import reportWebVitals from './reportWebVitals'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import {LoginOrRegister} from './UI/login/loginNavigation'
-import {UserService} from './backend-service-connector/service'
-import {SettingsMenu} from './UI/home/settings/settingsMenu'
-import {Home} from './UI/home/dashboard/home'
+import {LoginNavigation} from './UI/login'
+import {SettingsMenu} from './UI/home/settings'
+import {Home_Menu} from './UI/home/dashboard'
 import {HistoryContainer} from './UI/home/history'
-import {TransactionService} from './backend-service-connector/service/transactionService'
-import {WalletService} from './backend-service-connector/service/walletService'
+import {TransactionService, WalletService, UserService} from './backend-service-connector/service'
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -24,25 +22,25 @@ root.render(
             <Route
                 path={'/'}
                 element={
-                    <LoginOrRegister userService={userService}/>
+                    <LoginNavigation {...userService}/>
                 }
             />
             <Route
                 path={'/home/user'}
                 element={
-                    <SettingsMenu userService={userService}/>
+                    <SettingsMenu {...userService}/>
             }
             />
             <Route
                 path={'/home'}
                 element={
-                    <Home walletService={walletService}/>
+                    <Home_Menu getActiveToken={walletService.getActiveToken} getUserWalletFromDb={walletService.getUserWalletFromDb}/>
                 }
             />
             <Route
                 path={'/home/history'}
                 element={
-                    <HistoryContainer transactionService={transactionService}/>
+                    <HistoryContainer {...transactionService}/>
                 }
             />
         </Routes>

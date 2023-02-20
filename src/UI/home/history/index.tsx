@@ -1,1 +1,1 @@
-export { HistoryContainer } from './historyContainer'
+export { HistoryContainer } from './HistoryContainer'

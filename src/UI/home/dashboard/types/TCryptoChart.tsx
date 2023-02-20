@@ -1,4 +1,4 @@
-export type cryptoChart = {
+export type TCryptoChart = {
     color: string
     title: string
     value: number

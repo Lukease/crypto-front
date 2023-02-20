@@ -1,108 +1,108 @@
-import {User} from '../model/rest'
-import {Config} from '../config'
-import {UserLogIn} from '../model/rest'
+import { User } from '../model/rest'
+import { Config } from '../config'
+import { UserLogIn } from '../model/rest'
 
 export class UserService {
-    logInUser: UserLogIn | undefined
+  logInUser: UserLogIn | undefined
 
-    getActiveToken() {
-        return JSON.parse(localStorage.getItem('logInUser')!).activeToken
-    }
+  getActiveToken() {
+    return JSON.parse(localStorage.getItem('logInUser')!).activeToken
+  }
 
-    async getAllUsers() {
-        const users: Array<User> = await fetch(Config.baseUsersUrl + Config.getAllUsersPath, {
-            method: 'GET'
+  async getAllUsers() {
+    const users: Array<User> = await fetch(Config.baseUsersUrl + Config.getAllUsersPath, {
+      method: 'GET',
+    })
+      .then((response) => {
+        return response.json().then((data) => {
+
+          return data
         })
-            .then((response) => {
-                return response.json().then((data) => {
+      })
+      .catch(error => console.log(error))
 
-                    return data
-                })
-            })
-            .catch(error => console.log(error))
+    return users
 
-        return users
+  }
 
-    }
+  async addNewUser(newUser: User) {
+    return await fetch(Config.baseUsersUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(newUser),
+    })
+      .then(response => {
+        return response.json()
+          .then((data) => {
+            return data
+          })
+          .catch(error => {
+            alert(error)
+          })
+      })
+  }
 
-    async addNewUser(newUser: User) {
-        return await fetch(Config.baseUsersUrl, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-            body: JSON.stringify(newUser)
-        })
-            .then(response => {
-                return response.json()
-                    .then((data) => {
-                        return data
-                    })
-                    .catch(error => {
-                        alert(error)
-                    })
-            })
-    }
+  editUserLogin(newLogin: string) {
+    const activeToken: string = this.getActiveToken()
 
-    editUserLogin(newLogin: string) {
-        const activeToken: string = this.getActiveToken()
+    fetch(Config.baseUsersUrl + Config.editUserLoginPath, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: activeToken,
+      },
+      body: JSON.stringify({ login: newLogin }),
+    })
+      .then(response => response.json())
+      .catch(error => error)
+  }
 
-        fetch(Config.baseUsersUrl + Config.editUserLoginPath, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                Authorization: activeToken
-            },
-            body: JSON.stringify({login: newLogin})
-        })
-            .then(response => response.json())
-            .catch(error => error)
-    }
+  editUserEmail(newEmail: string) {
+    const activeToken: string = this.getActiveToken()
 
-    editUserEmail(newEmail: string) {
-        const activeToken: string = this.getActiveToken()
+    fetch(Config.baseUsersUrl + Config.editUserEmailPath, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: activeToken,
+      },
+      body: JSON.stringify({ email: newEmail }),
+    })
+      .then(response => response.json())
+      .catch(error => error)
+  }
 
-        fetch(Config.baseUsersUrl + Config.editUserEmailPath, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                Authorization: activeToken
-            },
-            body: JSON.stringify({email: newEmail})
-        })
-            .then(response => response.json())
-            .catch(error => error)
-    }
+  async logIn(login: string, password: string) {
+    const userLogIn: UserLogIn = new UserLogIn(login, password)
 
-    async logIn(login: string, password: string) {
-        const userLogIn: UserLogIn = new UserLogIn(login, password)
+    return await fetch(Config.baseUsersUrl + Config.logInUserPath, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(userLogIn),
+    })
+      .then(response => {
+        return response.json()
+          .then((data) => {
+            this.logInUser = data
+            this.setLogInUserToLocalStorage(data)
 
-        return await fetch(Config.baseUsersUrl + Config.logInUserPath, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-            body: JSON.stringify(userLogIn)
-        })
-            .then(response => {
-                return response.json()
-                    .then((data) => {
-                        this.logInUser = data
-                        this.setLogInUserToLocalStorage(data)
+            return data
+          })
+          .catch(() => {
+            this.logInUser = undefined
+          })
+      })
 
-                        return data
-                    })
-                    .catch(() => {
-                        this.logInUser = undefined
-                    })
-            })
+  }
 
-    }
+  setLogInUserToLocalStorage(user: User | undefined) {
+    localStorage.setItem('logInUser', JSON.stringify(user))
+    window.dispatchEvent(new Event('storage'))
+  }
 
-    setLogInUserToLocalStorage(user: UserLogIn | undefined) {
-        localStorage.setItem('logInUser', JSON.stringify(user))
-        window.dispatchEvent(new Event("storage"))
-    }
-
-    getLogInUserFromLocalStorage() {
-        return JSON.parse(localStorage.getItem('logInUser')!)
-    }
+  getLogInUserFromLocalStorage() {
+    return JSON.parse(localStorage.getItem('logInUser')!)
+  }
 }
