@@ -1,4 +1,4 @@
-import { CoinUser } from './coinUser'
+import { CoinUser } from './CoinUser'
 
 export class CoinInWallet {
   returnInPercent: number

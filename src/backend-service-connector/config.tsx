@@ -1,15 +1,15 @@
 export class Config {
-  static readonly baseUsersUrl = 'http://localhost:8080/users'
-  static readonly getAllUsersPath = '/get-all'
-  static readonly logInUserPath = '/log-in'
-  static readonly editUserEmailPath = '/new-email'
-  static readonly editUserLoginPath = '/new-login'
+  static readonly baseUsersUrl =  process.env.REACT_APP_BASE_USERS_URL!
+  static readonly getAllUsersPath =  process.env.REACT_APP_GET_ALL_USERS_PATH!
+  static readonly logInUserPath =  process.env.REACT_APP_lOG_IN_USER_PATH!
+  static readonly editUserEmailPath =  process.env.REACT_APP_EDIT_USER_EMAIL_PATH!
+  static readonly editUserLoginPath = process.env.REACT_APP_EDIT_USER_LOGIN_PATH!
 
-  static readonly baseTransactionsUrl = 'http://localhost:8080/transactions'
-  static readonly getAllUserTransactionsPath = '/all-transactions'
-  static readonly getAllCoinsInfoPath = '/get-coins-prices'
-  static readonly deleteTransactionPath = '/delete-transaction?transactionId='
-  static readonly getUserCoinPath = '/get-coin?name='
+  static readonly baseTransactionsUrl = process.env.REACT_APP_BASE_TRANSACTIONS_URL!
+  static readonly getAllUserTransactionsPath = process.env.REACT_APP_GET_ALL_USER_TRANSACTIONS_PATH!
+  static readonly getAllCoinsInfoPath = process.env.REACT_APP_GET_ALL_COINS_INFO_PATH!
+  static readonly deleteTransactionPath = process.env.REACT_APP_DELETE_TRANSACTION_PATH!
+  static readonly getUserCoinPath = process.env.REACT_APP_GET_USER_COIN_PATH!
 
-  static readonly baseWalletUrl = 'http://localhost:8080/wallet'
+  static readonly baseWalletUrl = process.env.REACT_APP_BASE_WALLET_URL!
 }

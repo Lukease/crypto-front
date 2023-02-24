@@ -3,7 +3,7 @@ import { UserAbout } from './UserAbout'
 import { EditUserInformation } from './EditUser'
 import { HomeNavigation, UserMenu } from '../navigation'
 
-export function SettingsMenu(userService: any): JSX.Element {
+export function SettingsMenu(): JSX.Element {
 
   return (
     <div className={'home'}>
@@ -12,8 +12,8 @@ export function SettingsMenu(userService: any): JSX.Element {
         <UserMenu />
         <div className={'dashboard'}>
           <div className={'settings__nav'}>
-            <UserAbout {...userService} />
-            <EditUserInformation {...userService} />
+            <UserAbout />
+            <EditUserInformation />
           </div>
         </div>
       </div>

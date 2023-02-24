@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { User } from '../../../backend-service-connector/model/rest'
-import { UserService } from '../../../backend-service-connector/service'
+import { UserServiceContext } from '../../../backend-service-connector/context'
 
-export function UserAbout(userService: UserService): JSX.Element {
+export function UserAbout(): JSX.Element {
+  const userService = useContext(UserServiceContext)
   const [userLogin, setUserLogin] = useState('')
   const [userEmail, setUserEmail] = useState('')
 

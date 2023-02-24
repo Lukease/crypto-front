@@ -2,16 +2,18 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import reportWebVitals from './reportWebVitals'
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import {LoginNavigation} from './UI/login'
-import {SettingsMenu} from './UI/home/settings'
-import {Home_Menu} from './UI/home/dashboard'
-import {HistoryContainer} from './UI/home/history'
-import {TransactionService, WalletService, UserService} from './backend-service-connector/service'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { LoginNavigation } from './UI/login'
+import { SettingsMenu } from './UI/home/settings'
+import { Home_Menu } from './UI/home/dashboard'
+import { HistoryContainer } from './UI/home/history'
+import {TransactionService, UserService, WalletService} from './backend-service-connector/service'
+import { UserServiceContext,WalletServiceContext,TransactionServiceContext } from './backend-service-connector/context'
 
 const root = ReactDOM.createRoot(
-    document.getElementById('root') as HTMLElement
+    document.getElementById('root') as HTMLElement,
 )
+
 const userService = new UserService()
 const transactionService = new TransactionService()
 const walletService = new WalletService()
@@ -22,29 +24,37 @@ root.render(
             <Route
                 path={'/'}
                 element={
-                    <LoginNavigation {...userService}/>
+                    <UserServiceContext.Provider value={userService}>
+                        <LoginNavigation />
+                    </UserServiceContext.Provider>
                 }
             />
             <Route
                 path={'/home/user'}
                 element={
-                    <SettingsMenu {...userService}/>
-            }
+                    <UserServiceContext.Provider value={userService}>
+                        <SettingsMenu />
+                    </UserServiceContext.Provider>
+                }
             />
             <Route
                 path={'/home'}
                 element={
-                    <Home_Menu getActiveToken={walletService.getActiveToken} getUserWalletFromDb={walletService.getUserWalletFromDb}/>
+                    <WalletServiceContext.Provider value={walletService}>
+                        <Home_Menu />
+                    </WalletServiceContext.Provider>
                 }
             />
             <Route
                 path={'/home/history'}
                 element={
-                    <HistoryContainer {...transactionService}/>
+                    <TransactionServiceContext.Provider value={transactionService}>
+                        <HistoryContainer />
+                    </TransactionServiceContext.Provider>
                 }
             />
         </Routes>
-    </Router>
+    </Router>,
 )
 
 reportWebVitals()

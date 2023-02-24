@@ -1,8 +1,9 @@
-import React, {  useState } from 'react'
+import React, {useContext, useState} from 'react'
 import { User } from '../../backend-service-connector/model/rest'
+import {UserServiceContext} from "../../backend-service-connector/context";
 
-export function LoginNavigation(props: any): JSX.Element {
-    const {userService} = props
+export function LoginNavigation(): JSX.Element {
+    const userService = useContext(UserServiceContext)
     const [isSignInForm, setSignInForm] = useState(true)
     const [login, setLogin] = useState('')
     const [email, setEmail] = useState('')

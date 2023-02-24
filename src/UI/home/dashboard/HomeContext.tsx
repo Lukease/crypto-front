@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Chart } from './Chart'
 import { Wallet } from '../../../backend-service-connector/model/rest'
 import randomColor from 'randomcolor'
 import { DashboardItem } from './DashboardItem'
-import { WalletService } from '../../../backend-service-connector/service'
+import { WalletServiceContext } from '../../../backend-service-connector/context'
 
-export function HomeContext(walletService: WalletService): JSX.Element {
+export function HomeContext(): JSX.Element {
+  const walletService = useContext(WalletServiceContext)
   const [color, setColor] = useState<Array<string>>([])
   const [userWallet, setUserWallet] = useState<Wallet | null>(null)
 

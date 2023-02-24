@@ -1,3 +1,3 @@
-export { UserService } from './userService'
-export { TransactionService } from './transactionService'
-export { WalletService } from './walletService'
+export { UserService } from './UserService'
+export { TransactionService } from './TransactionService'
+export { WalletService } from './WalletService'

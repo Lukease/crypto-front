@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import { Coin, Transaction } from '../../../backend-service-connector/model/rest'
-import { TransactionService } from '../../../backend-service-connector/service'
 import { THistoryItem } from '../dashboard/types'
+import {TransactionServiceContext} from '../../../backend-service-connector/context'
 
-export function HistoryContent(transactionService: TransactionService): JSX.Element {
+export function HistoryContent(): JSX.Element {
+  const transactionService = useContext(TransactionServiceContext)
   const [operationType, setOperationType] = useState<string>('')
   const [isAddButtonClicked, setAddButtonClicked] = useState<boolean>(false)
   const [operationDate, setOperationDate] = useState<Date>(new Date())
@@ -102,7 +103,7 @@ export function HistoryContent(transactionService: TransactionService): JSX.Elem
     const newTransaction: Transaction = new Transaction(undefined, operationType, userComment, operationDate,
       selectedCoin, operationType === 'withdraw' ? -Math.abs(coinAmount) : Math.abs(coinAmount), coinPrice, undefined)
 
-    transactionService.addNewTransaction(newTransaction)
+    transactionService.addNewTransaction(newTransaction).then(() => alert(`new ${operationType}`))
     setAddButtonClicked(!isAddButtonClicked)
     setAllUserTransactions([...allUserTransactions!, newTransaction])
     setCoinMaxAmount(0)

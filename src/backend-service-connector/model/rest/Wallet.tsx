@@ -1,4 +1,4 @@
-import { CoinInWallet } from './coinInWallet'
+import { CoinInWallet } from './CoinInWallet'
 
 export class Wallet {
   userId: number
