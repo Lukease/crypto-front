@@ -1,46 +1,70 @@
-# Getting Started with Create React App
+# Crypto app Front-end
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the front-end repository for a crypto application built with TypeScript, React and SASS.
 
-## Available Scripts
+## Table of contents
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Instalation](#Instalation)
+* [Usage](*Usage)
 
-In the project directory, you can run:
+## General info
+This project is a front-end application for a crypto app that provides users with information about various cryptocurrencies. It allows users to track crypto prices, view historical data, and manage their crypto portfolios. The application fetches data from cryptocurrency API.
 
-### `npm start`
+User Account Management: A user site where users can change their login password and update their account details.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Edit User Info 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+![image](https://github.com/Lukease/chess-game-frontend/assets/89201995/8ccf5bb2-c659-4c2e-9c8b-b84a4e692e44)
 
-### `npm test`
+User Info 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![image](https://github.com/Lukease/chess-game-frontend/assets/89201995/6e7fe20d-08dd-4f67-af16-ab123f2a0486)
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technologies
+Project is created with:
+* react version: 18.2.0
+* typescript version: 4.7.4
+* SASS
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Installation
+To install and run the Crypto app front-end locally, follow these steps:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Clone the repository:
 
-### `npm run eject`
+bash
+Copy code
+git clone https://github.com/your-username/crypto-front.git
+Navigate to the project directory:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+bash
+Copy code
+cd crypto-app-frontend
+Install the dependencies:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Copy code
+npm install
+Start the development server:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+sql
+Copy code
+npm start
+Open your browser and visit http://localhost:3000 to see the application running.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Usage
+Once the application is running, you can use the Crypto app front-end to explore and interact with various cryptocurrency features. Here are some common usage scenarios:
 
-## Learn More
+1. Sign up or log in to your account.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Log in 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![image](https://github.com/Lukease/chess-game-frontend/assets/89201995/7528f593-d592-47ca-a7e5-930580766c10)
+
+Sign up 
+
+![image](https://github.com/Lukease/chess-game-frontend/assets/89201995/b6a456e6-002d-4cc9-98f4-b1994816bf1f)
+ 
+3. Portfolio Management
+4. View Crypto Prices
+5. History of transactions
